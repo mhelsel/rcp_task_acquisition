@@ -1,0 +1,137 @@
+isunconnected: false
+cameras:
+  leftCamA:
+    serial: '25504066'
+    ismaster: true
+    crop:
+    - 40
+    - 640
+    - 30
+    - 480
+    exposure: 1000
+    framerate: 240
+    bin: 2
+    nickname: leftCamA
+    gain: 15
+    gamma: 0.8
+    in_use: true
+  rightCamA:
+    serial: '25476392'
+    ismaster: false
+    crop:
+    - 40
+    - 640
+    - 30
+    - 480
+    exposure: 1000
+    framerate: 240
+    bin: 2
+    nickname: rightCamA
+    gain: 15
+    gamma: 0.8
+    in_use: true
+  leftCamB:
+    serial: '25504067'
+    ismaster: false
+    crop:
+    - 40
+    - 640
+    - 30
+    - 480
+    exposure: 1000
+    framerate: 240
+    bin: 2
+    nickname: leftCamB
+    gain: 15
+    gamma: 0.8
+    in_use: true
+  rightCamB:
+    serial: '25504068'
+    ismaster: false
+    crop:
+    - 40
+    - 640
+    - 30
+    - 480
+    exposure: 1000
+    framerate: 240
+    bin: 2
+    nickname: rightCamB
+    gain: 15
+    gamma: 0.8
+    in_use: true
+unitRef: unitME
+raw_data_dir: /home/rcp/Documents/RawDataLocal
+default_video_dir:
+compressed_video_dir: /home/rcp/Documents/CompressedDataLocal
+screen_settings:
+  fullScreen: 1
+  screenNumber: 1
+  vflipMovies: 1
+hardware:
+  Audio:
+    labjack_input: AIN3
+    voltage_range:
+    - -9.6
+    - 9.6
+    graph: ''
+  Cameras:
+    labjack_input: AIN0
+    voltage_range:
+    - -1.2
+    - 1.2
+    graph: ''
+  Button:
+    labjack_input: FIO2
+    voltage_range:
+    - 0
+    - 1
+    graph: ''
+  Photodiode:
+    labjack_input: FIO3
+    voltage_range:
+    - 0
+    - 1
+    graph: ''
+  Grasp Button:
+    labjack_input: FIO1
+    voltage_range:
+    - 0
+    - 1
+    graph: ''
+  Microphone 1:
+    labjack_input: AIN1
+    voltage_range:
+    - -0.036
+    - 0.036
+    graph: ''
+  Microphone 2:
+    labjack_input: AIN2
+    voltage_range:
+    - -0.036
+    - 0.036
+    graph: ''
+  Force Sensor X:
+    labjack_input: AIN5
+    voltage_range:
+    - -0.6
+    - 0.6
+    graph: ''
+  Force Sensor Y:
+    labjack_input: AIN6
+    voltage_range:
+    - -0.6
+    - 0.6
+    graph: ''
+  Force Sensor Z:
+    labjack_input: AIN7
+    voltage_range:
+    - -0.6
+    - 0.6
+    graph: ''
+  Barcode:
+    labjack_input: FIO4
+    voltage_range:
+    - 0
+    - 1
+    graph: ''
