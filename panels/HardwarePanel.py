@@ -242,42 +242,42 @@ class HardwarePanel(wx.Panel):
         vertical_pos+=1
        
         for key in cam_config: 
-            if (cam_config[key]["serial"] in self.cam_serial_numbers):
-                in_use = wx.CheckBox(self, id=wx.ID_ANY)
-               
-                in_use.Bind(wx.EVT_CHECKBOX, self.update_options)
-                
-                name = wx.StaticText(self, label=cam_config[key]["nickname"])
-                name.Enable(False)
-                
-                serial = wx.Choice(self, choices=self.cam_serial_numbers)
-                serial.Bind(wx.EVT_CHOICE, self._on_choice_cameras)
-                serial.Enable(False)
-    
-                is_primary = (wx.RadioButton(self, style=wx.RB_GROUP) 
-                              if first_cam else wx.RadioButton(self))
-                first_cam= False
-                is_primary.Enable(False)
-                
-                new_camera = CameraRow(name, in_use, is_primary, serial)
-                
-                grid_sizer.Add(in_use, pos=(vertical_pos,0), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
-                grid_sizer.Add(name, pos=(vertical_pos,1), span=(0,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=10)
-                grid_sizer.Add(is_primary, pos=(vertical_pos,2), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
-                grid_sizer.Add(serial, pos=(vertical_pos,3), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
-                vertical_pos +=1
-    
-                if cam_config[key]["in_use"] :
-                    new_camera.in_use_all=True
-                    in_use.SetValue(True)
-                    name.Enable(True)
-                    serial.Enable(True)
-                    is_primary.Enable(True)
-                    is_primary.SetValue(cam_config[key]["ismaster"])
-                    cam_index = self.cam_serial_numbers.index(cam_config[key]["serial"])
-                    serial.SetSelection(cam_index)
-                
-                self.camera_list.append(new_camera)
+            
+            in_use = wx.CheckBox(self, id=wx.ID_ANY)
+           
+            in_use.Bind(wx.EVT_CHECKBOX, self.update_options)
+            
+            name = wx.StaticText(self, label=cam_config[key]["nickname"])
+            name.Enable(False)
+            
+            serial = wx.Choice(self, choices=self.cam_serial_numbers)
+            serial.Bind(wx.EVT_CHOICE, self._on_choice_cameras)
+            serial.Enable(False)
+
+            is_primary = (wx.RadioButton(self, style=wx.RB_GROUP) 
+                          if first_cam else wx.RadioButton(self))
+            first_cam= False
+            is_primary.Enable(False)
+            
+            new_camera = CameraRow(name, in_use, is_primary, serial)
+            
+            grid_sizer.Add(in_use, pos=(vertical_pos,0), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
+            grid_sizer.Add(name, pos=(vertical_pos,1), span=(0,1), flag=wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=10)
+            grid_sizer.Add(is_primary, pos=(vertical_pos,2), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
+            grid_sizer.Add(serial, pos=(vertical_pos,3), span=(0,1), flag=wx.ALIGN_CENTER | wx.ALL, border=10)
+            vertical_pos +=1
+
+            if cam_config[key]["in_use"] and (cam_config[key]["serial"] in self.cam_serial_numbers): 
+                new_camera.in_use_all=True
+                in_use.SetValue(True)
+                name.Enable(True)
+                serial.Enable(True)
+                is_primary.Enable(True)
+                is_primary.SetValue(cam_config[key]["ismaster"])
+                cam_index = self.cam_serial_numbers.index(cam_config[key]["serial"])
+                serial.SetSelection(cam_index)
+            
+            self.camera_list.append(new_camera)
         self._update_lists(self.camera_list, is_labjack=False)
         
         camera_box = wx.StaticBox(self, label="Camera Setup")

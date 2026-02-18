@@ -15,7 +15,7 @@ class StimulusBase():
     """
     """
 
-    def __init__(self, display, frame, video_status=None):
+    def __init__(self, display, frame, video_status=None, finish=None):
         self.display = display
         self.frame = frame
         self.prev_flip_time = None
@@ -27,9 +27,31 @@ class StimulusBase():
         self.current_trial = None
         self.video_status = video_status
         self.start_test = False
-
+        self.finish = finish
+        self.trial = 0
         return
 
+    def present(self):
+        
+        self.trial+=1
+        self.play_tone()
+        #switch the photodiode patch to be "On" while the photo is being shown
+        self.display.switch_patch()
+        self.display.draw_patch()
+        self.display.flip()
+
+        while True:
+            if self.finish.value == 2:
+                break
+        
+        #turn the patch to off and flip the display to black
+        self.display.switch_patch()
+        self.display.draw_patch()
+        self.play_tone()
+        
+        pass
+        
+        
     def prepareMetadataStream(self, sessionFolder, filename, header):
         """
         """
@@ -131,7 +153,9 @@ class StimulusBase():
             return 
         self.instructions_dict = video_filename_dict
 
-    
+    def reset_task(self):
+        #placeholder
+        pass
     
     def play_instructional_video(self, trial_name):
         # for trial_name in video_filename_dict:
@@ -180,8 +204,18 @@ class StimulusBase():
         self.display.clearStimuli()
 
 
+    def trial_bookends(self):
+        '''
+        could probably have a better name but I am tired today.
+        this is the way most of the task start/end so it saves error by just combining
+            them into the same function
+        turn the photodiode patch on/off, draw, and play a tone.
+        '''
 
-
+        self.display.switch_patch()
+        self.display.draw_patch()
+        self.display.flip()
+        self.play_tone()
 
 
 

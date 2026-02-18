@@ -59,7 +59,7 @@ class TrialPanel(wx.Panel):
         return static_box_sizer
 
 
-    def reset(self):
+    def reset(self, count):
         self.seconds = 0
     
     
@@ -103,7 +103,12 @@ class TrialPanel(wx.Panel):
     def resume_video(self):
         self.pause_video_button.SetLabel("Pause Video")
         
-        
+    def run_trial(self, count):
+        pass
+    
+    def get_result(self):
+        return None
+    
     def on_timer(self, event):
         pass
 

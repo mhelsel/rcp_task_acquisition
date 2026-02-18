@@ -1,5 +1,4 @@
 n_back:
-  type: n_back
   settings:
   - Audio
   - Cameras
@@ -11,7 +10,6 @@ n_back:
   - leftCamA
   - rightCamA
 naturalistic_speech:
-  type: naturalistic_speech
   settings:
   - Audio
   - Cameras
@@ -24,7 +22,6 @@ naturalistic_speech:
   - leftCamB
   - rightCamB
 motor_task_finger_taps:
-  type: motor_task_finger_taps
   settings:
   - Audio
   - Cameras
@@ -35,7 +32,6 @@ motor_task_finger_taps:
   - leftCamA
   - rightCamA
 diadochokinesis:
-  type: diadochokinesis
   settings:
   - Audio
   - Cameras
@@ -46,7 +42,6 @@ diadochokinesis:
   - leftCamA
   - rightCamA
 verbal_fluency:
-  type: verbal_fluency
   settings:
   - Audio
   - Cameras
@@ -57,7 +52,6 @@ verbal_fluency:
   - leftCamA
   - rightCamA
 vowel_space:
-  type: vowel_space
   settings:
   - Audio
   - Cameras
@@ -68,7 +62,6 @@ vowel_space:
   - leftCamA
   - rightCamA
 reach_grasp:
-  type: reach_grasp
   settings:
   - Audio
   - Cameras
@@ -85,7 +78,6 @@ reach_grasp:
   - leftCamB
   - rightCamB
 tone_taps_closed:
-  type: tone_taps_closed
   settings:
   - Audio
   - Cameras
@@ -97,7 +89,6 @@ tone_taps_closed:
   - leftCamA
   - rightCamA
 sara:
-  type: sara
   settings:
   - Audio
   - Cameras

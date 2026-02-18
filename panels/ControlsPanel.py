@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import wx
 from panels.TrialPanel import TrialPanel
-from panels.FingerTapPanel import FingerTapPanel
-from panels.NaturalisticSpeechPanel import NaturalisticSpeechPanel
-from panels.DdkPanel import DdkPanel
-from panels.VowelSpacePanel import VowelSpacePanel
-from panels.VerbalFluencyPanel import VerbalFluencyPanel
-from panels.NBackPanel import NbackPanel
-from panels.ReachGraspPanel import ReachGraspPanel
-from panels.ToneTapsClosedPanel import ToneTapsClosedPanel
-from panels.SaraPanel import SaraPanel
+from tasks.UpdrsTap.panel import FingerTapPanel
+from tasks.NaturalisticSpeech.panel import NaturalisticSpeechPanel
+from tasks.Diadochokinesis.panel import DdkPanel
+from tasks.VowelSpace.panel import VowelSpacePanel
+from tasks.VerbalFluency.panel import VerbalFluencyPanel
+from tasks.NBack.panel import NbackPanel
+from tasks.ReachGrasp.panel import ReachGraspPanel
+from tasks.ToneTaps.panel import ToneTapsClosedPanel
+from tasks.Sara.panel import SaraPanel
 
 class ControlsPanel(wx.Panel):
     def __init__(self,parent, ctrl_panel, task="task"):
@@ -99,6 +99,7 @@ class ControlsPanel(wx.Panel):
         self.task_text.SetLabel(f"{task_title}")
         self.task_panel.Destroy()
         self.task_panel = self.get_task_panel(task)
+        
         self.task_sizer.Add(self.task_panel, pos=(1,0), span=(0,5), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_LEFT | wx.ALL, border=0)
         self.task_panel.Hide()
         self.Layout()
@@ -130,7 +131,9 @@ class ControlsPanel(wx.Panel):
         elif task == "sara":
             return SaraPanel(self)
         else:
-            return TrialPanel(self)
+            basic_panel = TrialPanel(self)
+            basic_panel.continue_button.Show()
+            return basic_panel #TrialPanel(self)
     
     
     

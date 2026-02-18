@@ -76,6 +76,7 @@ def read_config(config_name):
     ruamelFile = ruamel.yaml.YAML()
     if not(os.path.exists(config_path)):
         return None
+    
     with open(config_path, 'r') as config_file:
         config = ruamelFile.load(config_file)
     return config

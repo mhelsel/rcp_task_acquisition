@@ -3,20 +3,18 @@ import ctypes
 import time
 import math
 import utils.file_utils as files
-# from tasks.NBack import N_back
-# from tasks.ToneTaps_OpenLoop import Tone_Taps
-# from tasks.PhotoTest import Photo_Test
-from tasks.BasicTaps import BasicTaps
+from tasks.UpdrsTap.BasicTaps import BasicTaps
 from utils.displays import Window
-from tasks.NaturalisticSpeech import NaturalisticSpeech
-from tasks.Diadochokinesis import Diadochokinesis
-from tasks.VerbalFluency import VerbalFluency
-from tasks.VowelSpace import VowelSpace
-from tasks.NBack import N_back
-from tasks.ReachGrasp import ReachGrasp
-from tasks.ToneTapsClosed import ToneTapsClosed
-from tasks.Sara import Sara
+from tasks.NaturalisticSpeech.NaturalisticSpeech import NaturalisticSpeech
+from tasks.Diadochokinesis.Diadochokinesis import Diadochokinesis
+from tasks.VerbalFluency.VerbalFluency import VerbalFluency
+from tasks.VowelSpace.VowelSpace import VowelSpace
+from tasks.NBack.NBack import N_back
+from tasks.ReachGrasp.ReachGrasp import ReachGrasp
+from tasks.ToneTaps.ToneTaps import ToneTapsClosed
+from tasks.Sara.Sara import Sara
 from tasks.HardwareTest import HardwareTest
+from tasks.bases import StimulusBase
 from utils.logger import get_logger
 logger = get_logger("./models/StimulusThread") 
 
@@ -157,7 +155,7 @@ class StimulusThread(threading.Thread):
             self.stimulus = ToneTapsClosed(self.window, self.frame, self.show_panel, self.press_count, self.finish)
             
         else:
-            self.stimulus = HardwareTest(self.window, self.frame, self.show_panel, self.finish)
+            self.stimulus = StimulusBase(self.window, self.frame, self.show_panel, self.finish)
             
         logger.info(f"iterable: {self.stimulus}")
             

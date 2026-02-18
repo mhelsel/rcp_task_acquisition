@@ -2,7 +2,6 @@ from psychopy import core, sound #, visual
 from . import bases
 # from utils.logging import logger
 from  utils.stimulus_utils import thread_event
-from utils.constants import BASIC_TAPS_TIME
 import logging
 # Get a logger instance (or the root logger)
 logger = logging.getLogger(__name__) # Or logging.getLogger() for the root logger

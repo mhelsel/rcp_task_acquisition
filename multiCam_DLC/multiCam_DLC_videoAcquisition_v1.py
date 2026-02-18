@@ -30,6 +30,7 @@ from models.Warnings import Warning
 # from panels.InterTrialPanel import IntertrialPanel
 from panels.MetadataPanel import MetadataPanel
 # from utils.logging import logger
+from utils.constants import RAW_DATA_DIR
 from utils.stimulus_utils import thread_event
 from utils.logger import get_logger
 logger = get_logger("./multiCam_DLC_videoAcquisition_v1") 
@@ -368,6 +369,11 @@ class MainFrame(wx.Frame):
             self.hardware_button.Enable(False)
             if self.task != "verbal_fluency":
                 self.setup_videos()
+            if self.task == "vowel_space":
+                trial, syllable, finish = self.thread.stimulus.get_trial()
+                self.trial_panel.repeat = True
+                self.trial_panel.update_trial(trial, syllable)
+
             self.trial_panel.start_new_trial()
             self.trial_panel.show()
         else:
@@ -390,7 +396,7 @@ class MainFrame(wx.Frame):
                 self.labjack_stream_button.SetLabel("Stream Labjack")
             self.labjack_stream_button.Enable(True)
             self.end_time= str(f'{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}Z') 
-            
+            self.thread.stimulus.reset_task()
             self.add_metadata()
             self.labjack_timer.Start(200)
 
@@ -406,16 +412,12 @@ class MainFrame(wx.Frame):
                 self.trial_button.SetLabel("Stop Trial")
                 self.start_recording(event)
                 self.msgq.put("run_stimulus")
-            # elif self.task == "sara":
-                
-                
-            elif self.task== "n_back":
+            if self.task == "n_back":
                 self.thread.stimulus.update_data(self.trial_panel.get_result())
                 self.trial_panel.run_trial(self.count)
                 self.trial_button.SetLabel("Stop Trial")
                 self.start_recording(event)
                 self.msgq.put("run_stimulus")
-                
             elif self.task == "diadochokinesis":
                 self.thread.stimulus.update_data(self.trial_panel.get_results())
                 self.trial_panel.run_trial()
@@ -427,6 +429,8 @@ class MainFrame(wx.Frame):
                     self.thread.stimulus.update_trial()
                 trial, syllable, finish = self.thread.stimulus.get_trial()
                 self.trial_panel.update_trial(trial, syllable)
+                if finish:
+                   self.trial_button.Enable(True) 
                 self.trial_panel.repeat = False
                 self.trial_button.SetLabel("Stop Trial")
                 self.trial_panel.repeat_trial.Enable(False)
@@ -488,7 +492,9 @@ class MainFrame(wx.Frame):
                     self.trial_panel.is_finish()
                     self.trial_button.Enable(False)
                     self.trial_button.SetLabel("Next Trial")
-                    self.trial_panel.repeat_trial.Enable(True)
+                    self.trial_panel.repeat_trial.Enable(True)    
+                    self.trial_panel.repeat_trial.SetValue(False) 
+                    
                     return
                 self.trial_panel.repeat_trial.Enable(True)
                 self.trial_panel.repeat_trial.SetValue(False)
@@ -864,6 +870,7 @@ class MainFrame(wx.Frame):
     def add_metadata(self):
         metadata = MetadataPanel()
         if metadata.show() == wx.ID_OK:
+            print('in metadata.showr')
             self.meta,ruamelFile = clara.metadata_template()
             date_string = datetime.datetime.utcnow().strftime("%Y%m%d")
             cameras = {}
@@ -911,9 +918,9 @@ class MainFrame(wx.Frame):
                 self.meta["trial_data"] = self.trial_panel.add_metadata()
             # if self.task == "diadochokinesis":
             #     self.meta["trial_data"]["trials_ran"] = self.trial_panel.trials
-            if self.task != "vowel_space":
-                for data in metadata.data:
-                    self.meta[data] = metadata.data[data]
+            # if self.task != "vowel_space":
+            for data in metadata.data:
+                self.meta[data] = metadata.data[data]
                 # self.meta['params'] = self.thread.params
                 logger.debug(data)
             # self.meta['duration (s)']=round(self.meta['duration (s)']*(self.sliderTabs/100))
@@ -921,12 +928,13 @@ class MainFrame(wx.Frame):
             clara.write_metadata(self.meta, self.metapath)
         else:
             #delete file
+            logger.debug(self.sess_dir)
             shutil.rmtree(self.sess_dir)
             
     
     def create_file(self):
         date_string = datetime.datetime.utcnow().strftime("%Y%m%d")
-        self.base_dir = os.path.join(self.user_cfg['raw_data_dir'], date_string, self.user_cfg['unitRef'])
+        self.base_dir = os.path.join(RAW_DATA_DIR, date_string, self.user_cfg['unitRef'])
         if not os.path.exists(self.base_dir):
             os.makedirs(self.base_dir)
         

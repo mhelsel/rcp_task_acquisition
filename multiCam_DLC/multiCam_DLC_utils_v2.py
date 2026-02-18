@@ -22,6 +22,7 @@ from pathlib import PurePath
 import sys, linecache
 import shutil
 from utils.file_utils import CONFIG_FILE_PATH
+from utils.constants import RAW_DATA_DIR, COMPRESSED_VIDEO_DIR
 from utils.logger import get_logger
 logger = get_logger("./multiCam_DLC/multiCam_DLC_utils_v2") 
 
@@ -35,8 +36,8 @@ class moveVids(Process):
             dirlist = list()
             destlist = list()
             user_cfg = read_config()
-            read_dir = user_cfg['raw_data_dir']
-            write_dir = user_cfg['compressed_video_dir']
+            read_dir = RAW_DATA_DIR
+            write_dir = COMPRESSED_VIDEO_DIR
             prev_date_list = [name for name in os.listdir(read_dir)]
             for f in prev_date_list:
                 unit_dirR = os.path.join(read_dir, f, user_cfg['unitRef'])

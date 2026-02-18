@@ -16,7 +16,7 @@ cameras:
     gamma: 0.8
     in_use: true
   rightCamA:
-    serial: '25476392'
+    serial: '25504068'
     ismaster: false
     crop:
     - 40
@@ -31,7 +31,7 @@ cameras:
     gamma: 0.8
     in_use: true
   leftCamB:
-    serial: '25504067'
+    serial: '25476392'
     ismaster: false
     crop:
     - 40
@@ -46,7 +46,7 @@ cameras:
     gamma: 0.8
     in_use: true
   rightCamB:
-    serial: '25504068'
+    serial: '25504067'
     ismaster: false
     crop:
     - 40
@@ -61,9 +61,7 @@ cameras:
     gamma: 0.8
     in_use: true
 unitRef: unitME
-raw_data_dir: /home/rcp/Documents/RawDataLocal
-default_video_dir:
-compressed_video_dir: /home/rcp/Documents/CompressedDataLocal
+
 screen_settings:
   fullScreen: 1
   screenNumber: 1
