@@ -136,7 +136,7 @@ class StimulusThread(threading.Thread):
             self.stimulus = Sara(self.window, self.frame, self.show_panel)
         
         elif self.task == 'diadochokinesis':
-            self.stimulus = Diadochokinesis(self.window, self.frame, self.finish, self.video_status)
+            self.stimulus =Diadochokinesis(self.window, self.frame, self.finish, self.video_status)
             
         elif self.task == "verbal_fluency":
             self.stimulus = VerbalFluency(self.window, self.frame, self.finish, self.video_status)
