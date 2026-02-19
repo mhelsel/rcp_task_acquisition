@@ -4,7 +4,7 @@ from tasks import bases
 # from utils.logging import logger
 from utils.stimulus_utils import thread_event
 from utils.logger import get_logger
-logger = get_logger("./tasks/NaturallisticSpeech") 
+logger = get_logger("./tasks/NaturalisticSpeech") 
 
 
 # basedir = "/home/rld/task-acquisition/tasks"

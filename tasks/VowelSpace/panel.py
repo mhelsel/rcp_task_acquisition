@@ -1,11 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import wx
-# from utils.logging import logger
-from datetime import datetime
 from panels.TrialPanel import TrialPanel
 import logging
-# Get a logger instance (or the root logger)
 logger = logging.getLogger(__name__) # Or logging.getLogger() for the root logger
 logger.setLevel(logging.DEBUG)
 
@@ -58,24 +53,16 @@ class VowelSpacePanel(TrialPanel):
     
 
     def is_finish(self):
-        self.finish_text.SetLabel("Task Finished! Press End Task to continue.")
+        self.finish_text.SetLabel("Task Finished! Press End Task.")
     
         
     def repeat_event(self):
         self.repeat= True
-        
         self.rest_timer.Stop()
         self.continue_button.SetValue(True)
         self.repeat_trial.Enable(False)
     
-    
-    # def run_trial(self, number):
-    #     pass
-    
-    
-    # def end_event(self, event):
-    #     self.cancel = True
-    
+
     
     def reset(self, number):
         self.timestamps = {}
@@ -86,14 +73,20 @@ class VowelSpacePanel(TrialPanel):
         
         
     def update_trial(self, trial, syllable):
+        '''
+        Updating with the current syllable
+        Trials are 0-indexed so we add 1 here to be in a better format for showing
+        '''
+        
         self.current_text.SetLabel(f"Say {syllable} again")
-        self.trial_text.SetLabel(f"Trial # {trial}")
+        self.trial_text.SetLabel(f"Trial # {trial+1}")
             
     
     def start_new_trial(self):
         self.repeat = True
         self.repeat_trial.Enable(False)
-        
+        self.continue_button.Enable(True)
+        self.finish_text.SetLabel("")
     
     
     

@@ -19,8 +19,6 @@ class ImagePanel(wx.Panel):
         
         self.draw_panel()
         
-        
-        
         self.figure = Figure()
         self.axes = list()
         self.figure.patch.set_facecolor('none')

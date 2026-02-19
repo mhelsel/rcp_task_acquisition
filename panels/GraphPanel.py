@@ -123,8 +123,7 @@ class GraphPanel(wx.Panel):
         y_coords = list(np.array([np.nan]*arr_size))
         x_coords = list(np.arange(0, arr_size))
         for index, _ in enumerate(PLOT_CONSTANTS):
-            plot, = self.axes.plot(x_coords, y_coords, label=PLOT_CONSTANTS[index], 
-                                   color=COLORS[self.color_index], linestyle=LINE_STYLES[index], lw=1)
+            plot, = self.axes.plot(x_coords, y_coords, label=PLOT_CONSTANTS[index], linestyle=LINE_STYLES[index], lw=1)
             # plot.set_visible(False)
             self.color_index+=1
             self.constants.append(plot)
@@ -134,7 +133,7 @@ class GraphPanel(wx.Panel):
     def update_constants(self, y_points, index, lj_value):
         min_old = float(self.voltage[lj_value][0])#float(self.min_max[lj_value][0])
         max_old = float(self.voltage[lj_value][1])#float(self.min_max[lj_value][1])
-        min_new = 10
+        min_new = 8
         max_new = 14
         y_points = np.array(y_points)
         y_points = (((y_points -min_old)* (max_new-min_new))/(max_old - min_old))  +min_new
@@ -161,7 +160,7 @@ class GraphPanel(wx.Panel):
             min_old = float(self.voltage[lj_value][0])#float(self.min_max[lj_value][0])
             max_old = float(self.voltage[lj_value][1])#float(self.min_max[lj_value][1])
             min_new = 0
-            max_new =10
+            max_new =7
             y_points = np.array(y_points)
             y_points = (((y_points -min_old)* (max_new-min_new))/(max_old - min_old))  +min_new
 

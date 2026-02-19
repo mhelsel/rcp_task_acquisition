@@ -82,9 +82,7 @@ class StimulusThread(threading.Thread):
                     self.totalStimFrames += self.window.stimulus_frame
                     self.window.reset_stimulus_frame()
                     
-                    # if hasattr(self.stimulus, 'saveMetadata'):
-                    #     self.params = self.stimulus.saveMetadata(self.stimulusConfig[self.task], self.sessionFolder)
-
+                
                     tEnd = time.time()
                     tElapsed = (tEnd - tStart) 
                     minutes = math.floor(tElapsed/ 60)
@@ -92,9 +90,7 @@ class StimulusThread(threading.Thread):
                     min_string = f"{math.floor(tElapsed/ 60)} minutes, " if minutes > 0 else ""
                     logger.info(f'Stimulus protocol completed in {min_string}{seconds:.2f} seconds')
 
-                    # files.copy_file(self.sessionFolder, self.stimulusConfigFilename)
-                    
-                    
+
                     self.finish.value = 1
                 elif msg=="end_stimulus":
                     
@@ -146,7 +142,7 @@ class StimulusThread(threading.Thread):
             self.stimulus = VerbalFluency(self.window, self.frame, self.finish, self.video_status)
         
         elif self.task == "vowel_space":
-            self.stimulus = VowelSpace(self.window, self.frame, self.show_panel)
+            self.stimulus = VowelSpace(self.window, self.frame)
         
         elif self.task == "reach_grasp":
             self.stimulus = ReachGrasp(self.window, self.frame, self.show_panel)

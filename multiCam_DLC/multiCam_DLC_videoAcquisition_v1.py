@@ -373,14 +373,15 @@ class MainFrame(wx.Frame):
                 trial, syllable, finish = self.thread.stimulus.get_trial()
                 self.trial_panel.repeat = True
                 self.trial_panel.update_trial(trial, syllable)
-
+                print("TRIAL: ", trial)
             self.trial_panel.start_new_trial()
             self.trial_panel.show()
         else:
             if self.trial_button.GetValue():
                 self.trial_button.SetValue(False)
                 self.trial_event(event)
-            
+            if self.recording:
+                self.stop_recording(event)
             self.video_status.value = 4
             self.task_button.SetLabel("Start Task")
             self.hardware_button.Enable(True)
@@ -396,8 +397,8 @@ class MainFrame(wx.Frame):
                 self.labjack_stream_button.SetLabel("Stream Labjack")
             self.labjack_stream_button.Enable(True)
             self.end_time= str(f'{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}Z') 
-            self.thread.stimulus.reset_task()
             self.add_metadata()
+            self.thread.stimulus.reset_task()
             self.labjack_timer.Start(200)
 
     
@@ -425,9 +426,10 @@ class MainFrame(wx.Frame):
                 self.msgq.put("run_stimulus")
             
             elif self.task == "vowel_space":
-                if not self.trial_panel.repeat:
-                    self.thread.stimulus.update_trial()
+                print(self.trial_panel.repeat)
+                self.thread.stimulus.update_trial(self.trial_panel.repeat)
                 trial, syllable, finish = self.thread.stimulus.get_trial()
+                print("TRIAL:::::: ", trial)
                 self.trial_panel.update_trial(trial, syllable)
                 if finish:
                    self.trial_button.Enable(True) 
@@ -488,13 +490,14 @@ class MainFrame(wx.Frame):
             elif self.task == "vowel_space":
                 thread_event.set()
                 trial, syllable, finish = self.thread.stimulus.get_trial()
+                print("FINISH TRIAL:::: ", trial)
                 if finish:
                     self.trial_panel.is_finish()
                     self.trial_button.Enable(False)
                     self.trial_button.SetLabel("Next Trial")
                     self.trial_panel.repeat_trial.Enable(True)    
                     self.trial_panel.repeat_trial.SetValue(False) 
-                    
+                    self.stop_recording(event)
                     return
                 self.trial_panel.repeat_trial.Enable(True)
                 self.trial_panel.repeat_trial.SetValue(False)
@@ -870,7 +873,6 @@ class MainFrame(wx.Frame):
     def add_metadata(self):
         metadata = MetadataPanel()
         if metadata.show() == wx.ID_OK:
-            print('in metadata.showr')
             self.meta,ruamelFile = clara.metadata_template()
             date_string = datetime.datetime.utcnow().strftime("%Y%m%d")
             cameras = {}
@@ -927,7 +929,7 @@ class MainFrame(wx.Frame):
             self.meta['EndTime']= self.end_time
             clara.write_metadata(self.meta, self.metapath)
         else:
-            #delete file
+            #remove entire directory
             logger.debug(self.sess_dir)
             shutil.rmtree(self.sess_dir)
             
