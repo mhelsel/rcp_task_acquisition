@@ -5,6 +5,7 @@ import win32api,win32process,win32con
 
 from labjack import ljm
 from rcp_task_acquisition.utils.constants import SCANS_PER_READ
+from rcp_task_acquisition.tasks.ReachGrasp.constants import GRASP_THRESHOLD, POKE_THRESHOLD
 from rcp_task_acquisition.utils.logger import get_logger
 logger = get_logger("./models/LabjackProcess") 
 
@@ -14,8 +15,10 @@ class LabJackDataStream(Process):
     def __init__(self, arr_length, is_finished, labjack_arr, 
                  create_csv, folder_queue, labjack_list, graph_indices, 
                  button_pressed, inputs, button_list, press_counter,
-                 constants, voltage_ranges, stream_started, scan_rate, handshake):
+                 constants, voltage_ranges, stream_started, scan_rate,
+                 handshake, grasp_ready, grasp_task):
         self.is_success = True
+        
         self.voltage_range = {}
         for index, val in enumerate(labjack_list):
             if "A" in val:
@@ -24,6 +27,12 @@ class LabJackDataStream(Process):
         super().__init__()
         self.arr_length = arr_length
         self.attemptedscanRate = 40000
+        self.grasp_task = grasp_task
+        self.grasp_mean = None
+        self.grasp_index = None
+        self.grasp_ready = grasp_ready[0]
+        self.max_grasp = grasp_ready[1]
+        self.rest_time = grasp_ready[2]
         self.button_pressed = button_pressed
         self.press_counter = press_counter
         self.analog_inputs  = inputs[0]
@@ -126,7 +135,25 @@ class LabJackDataStream(Process):
 
             ints = results[-1].astype(np.uint16)
             new_list = np.unpackbits(ints.view(np.uint8), bitorder="little").reshape(16, SCANS_PER_READ, order = "F")#[::-1]
-
+            
+            if self.grasp_task:
+                if self.grasp_index == None:
+                    self.grasp_index = self.analog_inputs.index("AIN4")
+                #right now we are assuming FIO1 is where the grasp pad is located
+                if not np.all(new_list[1]):
+                    idx = len(new_list[1]) - int(np.argmax(new_list[1] == 1))
+                    self.rest_time.value = (1/self.actualscanRate.value) * idx
+                    logger.debug(f"seconds in scan: {self.rest_time.value}")
+                    self.grasp_ready.value = True
+                    self.grasp_mean = np.mean(results[self.grasp_index])
+                    
+                    
+                if self.grasp_mean is not None:
+                    grasp_results = results[self.grasp_index]
+                    grasp_results = np.abs(grasp_results - self.grasp_mean)
+                    self.max_grasp.value = grasp_results.max()   
+                
+            
             if self.button_list:
                 for button in self.button_list:
                     reshape_list = new_list
@@ -139,6 +166,7 @@ class LabJackDataStream(Process):
                             debounce = 1
                     if np.all(reshape_list[button[0]][-min_off_samples:]):
                         debounce = 0
+            
             if write_to_csv:
                 self.write_csv( results, first_write)
                 first_write = False

@@ -19,7 +19,7 @@ cameras:
     flip: false
     in_use: true
   rightCamTop:
-    serial: '24044011'
+    serial: '24043993'
     ismaster: false
     crop:
     - 90
@@ -47,7 +47,7 @@ cameras:
     flip: false
     in_use: true
   rightCamFace:
-    serial: '24043993'
+    serial: '24044011'
     ismaster: false
     crop:
     - 20

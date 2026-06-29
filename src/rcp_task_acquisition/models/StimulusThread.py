@@ -36,13 +36,14 @@ class Msg(Enum):
     CLOSE_WINDOW = "close"
     VOWEL_SPACE = "vowel_space"
 
-
 class StimulusThread(Process):
     def __init__(self, msgq, finish, shared, frame, 
                  screen_config, task, button, press_count,
-                 video_status, resultsq, stimulus_timer, event_lock):
+                 video_status, resultsq, stimulus_timer, event_lock, grasp_ready, grasp_count):
         super().__init__()
         self.msgq = msgq
+        self.grasp_ready = grasp_ready
+        self.grasp_count = grasp_count
         self.screenConfig = screen_config
         self.shared = shared
         self.finish = finish
@@ -104,6 +105,7 @@ class StimulusThread(Process):
                         self.finish.value = 1
                     else:
                         self.finish.value = 0
+
                 elif msg== Msg.END_TASK.value:
                     
                     self.end_stimulus()
@@ -135,7 +137,6 @@ class StimulusThread(Process):
                             trial_data = msgq_data
                     except:
                         trial_data = msgq_data
-                    # trial_data = trial_data.replace("(", "")
                     self.stimulus.update_data(trial_data)
                 elif Msg.RESET_TASK.value in msg:
                     self.stimulus.reset_task()
