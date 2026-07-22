@@ -182,7 +182,7 @@ class StimulusThread(Process):
             self.stimulus = VowelSpace(base_vars)
         
         elif self.task == "reach_grasp":
-            self.stimulus = ReachGrasp(base_vars)
+            self.stimulus = ReachGrasp(base_vars, self.grasp_ready, self.grasp_count)
         
         elif self.task == 'tone_taps_closed':
             self.stimulus = ToneTapsClosed(base_vars, self.press_count)

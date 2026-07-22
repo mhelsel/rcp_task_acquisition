@@ -138,20 +138,29 @@ class LabJackDataStream(Process):
             
             if self.grasp_task:
                 if self.grasp_index == None:
-                    self.grasp_index = self.analog_inputs.index("AIN4")
+                    self.grasp_index = self.analog_inputs.index("AIN7")
                 #right now we are assuming FIO1 is where the grasp pad is located
                 if not np.all(new_list[1]):
-                    idx = len(new_list[1]) - int(np.argmax(new_list[1] == 1))
-                    self.rest_time.value = (1/self.actualscanRate.value) * idx
-                    logger.debug(f"seconds in scan: {self.rest_time.value}")
-                    self.grasp_ready.value = True
-                    self.grasp_mean = np.mean(results[self.grasp_index])
-                    
+                    if new_list[1][0] != 0:
+                        test = np.where(new_list[1] == 0)
+                        test_new = np.where(new_list[1] == 1)
+                        logger.debug(f"test: {test}")
+                        logger.debug(f"1s: {test_new}")
+                        idx = len(new_list[1]) - int(np.argmax(new_list[1] == 1))
+                        self.rest_time.value = (1/self.actualscanRate.value) * idx
+                        # logger.debug(f"seconds in scan: {self.rest_time.value}")
+                        self.grasp_ready.value = True
+                        self.grasp_mean = np.mean(results[self.grasp_index])
+                        # logger.debug(f"grasp_mean in pad: {self.grasp_mean}")
                     
                 if self.grasp_mean is not None:
                     grasp_results = results[self.grasp_index]
-                    grasp_results = np.abs(grasp_results - self.grasp_mean)
-                    self.max_grasp.value = grasp_results.max()   
+                    grasp_results = (grasp_results - self.grasp_mean)
+                    # logger.debug(f"grasp_results: {grasp_results[:10]}")
+                    # logger.debug(f"grasp_mean in second if: {self.grasp_mean}")
+                    # logger.debug(f"grasp = {results[self.grasp_index].max()}")
+                    # logger.debug(f"grasp = {results[self.grasp_index].min()}")
+                    self.max_grasp.value = grasp_results.min() if grasp_results.min() < self.max_grasp.value else self.max_grasp.value   
                 
             
             if self.button_list:

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-from psychopy import core
-
-=======
 import numpy as np
 from psychopy import core, visual
 import pyaudio
@@ -12,7 +8,7 @@ from rcp_task_acquisition.tasks.ReachGrasp.constants import (MIN_REST_VAL,
                                                              GRASP_THRESHOLD,
                                                              CORRECT_IMG,
                                                              INCORRECT_IMG)
->>>>>>> 7ea9515 (updated reach grasp system)
+
 from rcp_task_acquisition.tasks import bases
 from rcp_task_acquisition.utils.logger import get_logger
 logger = get_logger("./tasks/ReachGrasp") 
@@ -21,7 +17,7 @@ logger = get_logger("./tasks/ReachGrasp")
 
 class ReachGrasp(bases.StimulusBase):
 
-    def __init__(self, base_vars):
+    def __init__(self, base_vars, grasp, grasp_count):
         super().__init__(**base_vars)
         self.timer.value = 0
         self.trial_count = 0
@@ -35,8 +31,10 @@ class ReachGrasp(bases.StimulusBase):
         
         
     def present(self):  
+        self.timer.value = 0
+        self.grasp_count.value = 0
         timing_list = np.linspace(MIN_REST_VAL, MAX_REST_VAL, TRIALS_PER_BLOCK)
-        np.random.shuffle(timing_list
+        np.random.shuffle(timing_list)
         self.trial_count+=1
         self.trial_dict[f"trial_{self.trial_count}"] = {"hand_used": self.hand,
                                                         "grap_object": self.grasp_object,
@@ -51,61 +49,85 @@ class ReachGrasp(bases.StimulusBase):
         self.display.draw_patch()
         self.display.flip()
 
-        # clock = core.Clock()
-        # while self.finish.value == 0:
-        #     self.display.draw_patch()
-        #     self.display.flip()        
-        #     self.timer.value = int(clock.getTime())
 
-
-        for rest_time in range(0, TRIALS_PER_BLOCK):
+        gui_clock = core.Clock()
+        for rest_value in range(0, TRIALS_PER_BLOCK):
+            # if rest_value > 0:
+            self.timer.value = int(gui_clock.getTime())
             if self.finish.value == 2:
                 self.display.switch_patch()
                 self.display.draw_patch()
                 self.display.flip()        
                 self.play_tone()
                 return
-            
-            self.trial_dict[f"trial_{self.trial_count}"]["rest_timings"].append(timing_list[rest_time])
+        
+            self.trial_dict[f"trial_{self.trial_count}"]["rest_timings"].append(timing_list[rest_value])
             #wait to get the ready signal
-            import time
-            time.sleep(4)
-            # while not self.grasp_ready.value:
-            #     if self.finish.value == 2:
-            #         break
+
+            while not self.grasp_ready.value:
+                self.timer.value = int(gui_clock.getTime())
+                if self.finish.value == 2:
+                    break
             logger.debug(f"max_value {self.max_value.value}")
-            self.grasp_count.value = rest_time+1
-            if self.max_value.value > GRASP_THRESHOLD:
-                correct_img.draw()
-                self.display.draw_patch()
-                self.display.flip()
-            else:
-                incorrect_img.draw()
-                self.display.draw_patch()
-                self.display.flip()
+            self.grasp_count.value = rest_value#+1
+            
+            self.timer.value = int(gui_clock.getTime())
+            if rest_value > 0:
+                if self.max_value.value < GRASP_THRESHOLD:
+                    correct_img.draw()
+                    self.display.draw_patch()
+                    self.display.flip()
+                else:
+                    incorrect_img.draw()
+                    self.display.draw_patch()
+                    self.display.flip()
+                
+            self.timer.value = int(gui_clock.getTime())
             #start countdown once hand is resting
+            self.max_value.value = 0
             self.grasp_ready.value = False
             clock = core.Clock() 
             logger.debug(f"rest_time = {self.rest_time.value}")
-            while clock.getTime() < timing_list[rest_time]-self.rest_time.value:
+            while clock.getTime() < timing_list[rest_value]-self.rest_time.value:
+                self.timer.value = int(gui_clock.getTime())
                 if self.finish.value == 2:
                         self.display.switch_patch()
                         self.display.draw_patch()
                         self.display.flip()        
                         self.play_tone()
                         return
+            
+            
             self.display.draw_patch()
             self.display.flip()
             #tone to start the reach
             self.play_reach_tone()
+            
         #final wait for participant to touch pad before ending the trial
-        # while not self.grasp_ready.value:
-        #     if self.finish.value == 2:
-        #     break
+        while not self.grasp_ready.value:
+            self.timer.value = int(gui_clock.getTime())
+            if self.finish.value == 2:
+                break
+        
+        logger.debug(f"max_value {self.max_value.value}")
+        self.grasp_count.value = TRIALS_PER_BLOCK
+        final_time = 1.5 #in seconds
+        final_image = incorrect_img
+        if self.max_value.value < GRASP_THRESHOLD:
+            final_image = correct_img
+        clock = core.Clock()
+        while clock.getTime() < final_time:
+            final_image.draw()
+            self.display.draw_patch()
+            self.display.flip()
+                    
         self.display.switch_patch()
         self.display.draw_patch()
         self.display.flip()        
         self.play_tone()
+        self.timer.value = 0
+        self.grasp_count.value = 0
+        self.grasp_ready.value = False
 
         
         
