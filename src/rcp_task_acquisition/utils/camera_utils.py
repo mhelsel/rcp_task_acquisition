@@ -19,6 +19,9 @@ def identify_dropped_frames(timestamp_file, frame_rate):
     #getting frame count from timestamps (less accurate but catches sync issues)
     timestamps_ns = pd.read_csv(timestamp_file)['timestamp'].values[1:]  # Extract timestamp column
     expected_interval = 1e9 / frame_rate
+    if len(timestamps_ns) < 1:
+        return None, None, None
+    
     current_frame = len(timestamps_ns)
     timestamps_ns = np.asarray(timestamps_ns)
     dropped_frame_count = np.sum((np.round(timestamps_ns / expected_interval)) - 1)
