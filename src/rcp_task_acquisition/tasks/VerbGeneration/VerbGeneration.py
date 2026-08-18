@@ -87,6 +87,7 @@ class VerbGeneration(bases.StimulusBase):
     
     def update_data(self, list_num):
         self.stim_list = []
-        self.list_num = int(list_num[0])#-1
+        logger.debug(f"list_num in psychopy: {list_num}")
+        self.list_num = int(list_num)#-1
         for word in self.lists[self.list_num]:
             self.stim_list.append(visual.TextStim(self.display, text=word, name="trial", pos=(0, 0), height=100))
