@@ -131,3 +131,20 @@ class NaturalisticSpeechPanel(TrialPanel):
         self.Layout()
 
 
+    def enable_buttons(self, enable, trial=False):
+        super().enable_buttons(enable)  
+        self.shown_image.Enable(enable)
+        self.image_choice.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.seconds_text.Enable(enable)
+        
+    # def trial_buttons(self):
+    #     self.image_choice.Enable(False)
+    #     self.shown_image.Enable(False)
+    
+    
+    
+    
+    
+    
+    

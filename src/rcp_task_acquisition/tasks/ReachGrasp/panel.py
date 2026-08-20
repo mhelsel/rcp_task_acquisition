@@ -118,3 +118,32 @@ class ReachGraspPanel(TrialPanel):
             self.reaches_text.SetLabel(f"Reaches completed in Block: {self.grasp_count.value}")
 
 
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        
+        self.trial_text.Enable(enable)
+        self.hand_text.Enable(enable)
+        self.left_radio.Enable(enable)
+        self.right_radio.Enable(enable)
+        self.object_text.Enable(enable)
+        self.large_object_radio.Enable(enable)
+        self.precision_object_radio.Enable(enable)
+        self.type_text.Enable(enable)
+        self.grasp_radio.Enable(enable)
+        self.pinch_radio.Enable(enable)
+        self.seconds_text.Enable(enable)
+        self.reaches_text.Enable(enable)
+       
+        
+    # def trial_buttons(self):
+    #     self.left_radio.Enable(False)
+    #     self.right_radio.Enable(False)
+    #     self.hand_text.Enable(False)
+    #     self.object_text.Enable(False)
+    #     self.large_object_radio.Enable(False)
+    #     self.precision_object_radio.Enable(False)
+    #     self.type_text.Enable(False)
+    #     self.grasp_radio.Enable(False)
+    #     self.pinch_radio.Enable(False)
+        
+        

@@ -39,10 +39,12 @@ class SwitchPanel():
     def switch_panel(self, event: wx.Event) -> None:
         # if launch panel showing, switching to show task panel & vice versa
         if self.active_panel == ActivePanel.LAUNCH.value:
-            self.task_frame.Enable()
+            
             self.task_frame.quit.SetLabel("Exit to Launch Menu")
             self.launch_panel.get_metadata()
             self.task_frame.show(self.launch_panel.metadata, event)
+            self.task_frame.widget_panel.enable_buttons(True)
+            self.task_frame.ctrl_panel.enable_buttons(True)
             self.launch_panel.Hide()
             
         else:
@@ -65,7 +67,8 @@ class SwitchPanel():
            
         else:
             self.task_frame.quit.SetLabel("Loading...")
-            self.task_frame.Disable()
+            self.task_frame.widget_panel.enable_buttons(False)
+            self.task_frame.ctrl_panel.enable_buttons(False)
             
         self.disable_timer.StartOnce(200)
         

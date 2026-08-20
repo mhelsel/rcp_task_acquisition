@@ -134,3 +134,12 @@ class TrialPanel(wx.Panel):
 
     def add_timer(self, timer):
         self.timer = timer
+        
+    def enable_buttons(self, enable):
+        
+        self.continue_button.Enable(enable)
+        self.repeat_trial.Enable(enable)
+        
+    def trial_buttons(self):
+        pass
+        

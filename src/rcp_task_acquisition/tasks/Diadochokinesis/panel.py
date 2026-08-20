@@ -189,5 +189,28 @@ class DdkPanel(TrialPanel):
         self.start_video_button.Enable(True)
         
  
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.start_video_button.Enable(enable)
+        self.pause_video_button.Enable(enable)
+        self.syllable_video_title.Enable(enable)
+        self.syllable_start_video_button.Enable(enable)
+        self.syllable_pause_video_button.Enable(enable)
+        self.syllable_pause_video_button.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.syllable_text.Enable(enable)
+        self.seconds_text.Enable(enable)
+        self.continue_button.Enable(enable)
+        self.next_button.Enable(enable)
+        
+    # def trial_buttons(self):
+    #     self.next_button.Enable(False)
+    #     self.start_video_button.Enable(False)
+    #     self.syllable_start_video_button.Enable(False)
+    #     self.syllable_pause_video_button.Enable(False)
+    #     self.pause_video_button.Enable(False)
+        
+        
+        
         
         

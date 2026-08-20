@@ -98,3 +98,25 @@ class FingerTapPanel(TrialPanel):
             self.seconds-=1
             if self.seconds >= 0:
                 self.seconds_text.SetLabel(f"Time: {self.seconds} secs")
+        
+                
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.start_video_button.Enable(enable)
+        self.pause_video_button.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.type_text.Enable(enable)
+        self.task_type.Enable(enable)
+        self.hand_text.Enable(enable)
+        self.left_radio.Enable(enable)
+        self.right_radio.Enable(enable)
+        self.seconds_text.Enable(enable)
+        
+        
+    # def trial_buttons(self):
+        # self.trial_is_active = True
+        # self.left_radio.Enable(False)
+        # self.right_radio.Enable(False)
+        # self.hand_text.Enable(False)
+        # self.start_video_button.Enable(False)
+        # self.task_type.Enable(False)

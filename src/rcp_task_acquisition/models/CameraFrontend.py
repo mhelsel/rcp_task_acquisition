@@ -276,17 +276,17 @@ class Camera():
                 
                 
     def start_recording(self, event, base_dir, sess_dir, path_base, count):
-        totTime = 20 #int(self.secRec.GetValue())+int(self.minRec.GetValue())*60
-        spaceneeded = 0
-        freespace = shutil.disk_usage(base_dir)[2]
-        for ndx, w in enumerate(self.cam_dict):
-            recSize = self.aqW[ndx]*self.aqH[ndx]*3*self.cam_dict[w].actual_framerate*totTime
-            spaceneeded+=recSize
-        if spaceneeded > freespace:
-            self.warning.update_error("space")
-            self.warning.display()
+        # totTime = 20 #int(self.secRec.GetValue())+int(self.minRec.GetValue())*60
+        # spaceneeded = 0
+        # freespace = shutil.disk_usage(base_dir)[2]
+        # for ndx, w in enumerate(self.cam_dict):
+        #     recSize = self.aqW[ndx]*self.aqH[ndx]*3*self.cam_dict[w].actual_framerate*totTime
+        #     spaceneeded+=recSize
+        # if spaceneeded > freespace:
+        #     self.warning.update_error("space")
+        #     self.warning.display()
         
-        logger.info(f"Total estimated run time: {totTime}")
+        # logger.info(f"Total estimated run time: {totTime}")
         for ndx, s in enumerate(self.cam_dict):
             camID = str(s)
             self.cam_dict[camID].camq.put('recordPrep')
@@ -297,6 +297,7 @@ class Camera():
 
         self.camaq.value = 1
         self.startAq()
+    
     
     def stop_recording(self,event):
         self.shared.value = -1

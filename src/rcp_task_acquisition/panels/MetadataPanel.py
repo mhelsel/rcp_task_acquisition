@@ -24,7 +24,7 @@ class MetadataPanel():
         vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         # self.dialog.SetBackgroundColour(wx.Colour(54, 54, 54))
         # self.dialog.SetForegroundColour(wx.Colour(250,250,250))
-        
+        self.disable_timer = wx.Timer(self.panel, wx.ID_ANY)
         vertical_sizer.Add(self._setup_metadata(), 0, wx.ALIGN_LEFT | wx.TOP, 30)
         vertical_sizer.Add(self._setup_buttons(), 0, wx.ALIGN_CENTER_HORIZONTAL | wx.TOP, 30)
         self.panel.SetSizerAndFit(vertical_sizer)
@@ -47,7 +47,7 @@ class MetadataPanel():
         self.continue_button.Bind(wx.EVT_BUTTON, self.continue_event)
         cancel= u'\u2717'
         self.cancel_end_button = wx.Button(self.panel, label=f"{cancel}  Delete Session")
-        self.cancel_end_button.Bind(wx.EVT_BUTTON, self.cancel_event)
+        self.cancel_end_button.Bind(wx.EVT_BUTTON, self.disable_metadata)
         
         row_sizer = wx.GridBagSizer(3, 2)
         row_sizer.Add(self.continue_button, pos=(0, 0), span=(2,1), flag=wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, border=10)
@@ -79,10 +79,22 @@ class MetadataPanel():
                                "Are you sure you want to delete this session?", 
                                "", 
                                wx.YES_NO | wx.ICON_QUESTION)
+
         if dlg.ShowModal() == wx.ID_NO: 
+            self.continue_button.Enable(True)
+            self.cancel_end_button.Enable(True)
             return
         self.dialog.EndModal(wx.CANCEL)
         self.dialog.Destroy()
+        
+    
+    def disable_metadata(self, event):
+        self.panel.Bind(wx.EVT_TIMER, self.cancel_event, self.disable_timer)
+
+        self.continue_button.Disable()
+        self.cancel_end_button.Disable()
+
+        self.disable_timer.StartOnce(80)
     
     
     def show(self):

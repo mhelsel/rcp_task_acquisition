@@ -332,6 +332,12 @@ class GraphPanel(wx.Panel):
     def reset(self):
         self.color_index = 0
         
+    def enable_buttons(self, enable):
+        self.labjack_stream_button.Enable(enable)
+        for choice in self.labjack_choices:
+            choice.Enable(enable)
+        
+        
         
         
     def update_label(self, index: int, new_label:str) -> None:

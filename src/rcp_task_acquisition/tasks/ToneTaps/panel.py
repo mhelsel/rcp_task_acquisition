@@ -46,9 +46,9 @@ class ToneTapsClosedPanel(TrialPanel):
     def run_trial(self, number):
         self.seconds = 0
         self.trial_is_active = True
-        self.left_radio.Enable(False)
-        self.right_radio.Enable(False)
-        self.hand_text.Enable(False)
+        # self.left_radio.Enable(False)
+        # self.right_radio.Enable(False)
+        # self.hand_text.Enable(False)
         self.trial_text.SetLabel(f"Trial # {number}")
     
     
@@ -89,5 +89,21 @@ class ToneTapsClosedPanel(TrialPanel):
                 self.seconds_text.SetLabel(f"Time: {self.seconds} secs")
             # else:
                 # self.continue_button.Enable(True)
+               
                 
-                
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        
+        self.start_video_button.Enable(enable)
+        self.pause_video_button.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.hand_text.Enable(enable)
+        self.left_radio.Enable(enable)
+        self.right_radio.Enable(enable)
+        self.seconds_text.Enable(enable)
+        
+    
+    def trial_buttons(self):
+        self.left_radio.Enable(False)
+        self.right_radio.Enable(False)
+        self.hand_text.Enable(False)

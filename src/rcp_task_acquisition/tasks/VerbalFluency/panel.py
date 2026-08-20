@@ -175,3 +175,17 @@ class VerbalFluencyPanel(TrialPanel):
         self.start_video_button.Enable(False)
         self.Layout()
         self.Update()
+        
+        
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.start_video_button.Enable(enable)
+        self.pause_video_button.Enable(enable)
+        self.phonemic_task.Enable(enable)
+        self.phonemic_choice.Enable(enable)
+        self.semantic_task.Enable(enable)
+        self.semantic_choice.Enable(enable)
+        self.prompt_text.Enable(enable)
+        self.seconds_text.Enable(enable)
+        
+        

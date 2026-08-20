@@ -150,6 +150,29 @@ class ControlsPanel(wx.Panel):
         self.task_panel.Destroy()
     
     
+    def enable_buttons(self, enable=True):
+        self.cam_panel.init.Enable(enable)
+        self.cam_panel.reset.Enable(enable)
+        self.cam_panel.update_settings.Enable(enable)
+        self.cam_panel.play.Enable(enable)
+        self.cam_panel.rec.Enable(enable)
+        self.cam_panel.exposure_button.Enable(enable)
+        self.cam_panel.set_crop.Enable(enable)
+        self.cam_panel.crop.Enable(enable)
+        self.cam_panel.minRec.Enable(enable)
+        self.cam_panel.secRec.Enable(enable)
+        
+        self.camera_toggle.Enable(enable)
+        self.hardware_button.Enable(enable)
+        self.session_button.Enable(enable)
+        self.quit.Enable(enable)
+        self.tens_button.Enable(enable)
+    
+        self.task_panel.enable_buttons(enable)
+    
+    
+    
+    
     
 class CameraControlPanel(wx.Panel):
     def __init__(self, parent, button_width):
@@ -207,3 +230,6 @@ class CameraControlPanel(wx.Panel):
         bsizer.Add(camsizer, 1, wx.EXPAND | wx.ALL, 5)
         self.SetSizer(bsizer)
         bsizer.Fit(self)
+        
+    
+    

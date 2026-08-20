@@ -77,6 +77,7 @@ class VerbGenerationPanel(TrialPanel):
         
     def get_result(self):
         list_choice = self.noun_choice.GetSelection()
+        logger.debug(f"list choice: {list_choice}")
         return list_choice
 
     
@@ -99,4 +100,9 @@ class VerbGenerationPanel(TrialPanel):
             self.seconds_text.SetLabel(f"Time: {self.display_mins} mins, {self.display_secs} secs")
 
 
-
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.noun_choice.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.seconds_text.Enable(enable)
+        self.continue_button.Enable(enable)

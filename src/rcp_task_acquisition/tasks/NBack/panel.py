@@ -23,22 +23,22 @@ class NbackPanel(TrialPanel):
         self.practice = wx.RadioButton(self, label="Practice Trial", style= wx.RB_GROUP)
         self.real = wx.RadioButton(self, label="Real Trial")
         
-        trial = wx.StaticText(self, label='Select N-back')
+        self.trial = wx.StaticText(self, label='Select N-back')
         self.nback_choice= wx.Choice(self, 
                                        id=wx.ID_ANY, 
                                        choices=NBACK_TYPES,
                                        size=(200, -1))
         self.nback_choice.SetSelection(0)
         
-        text = wx.StaticText(self, label='Select trial type')
+        self.text = wx.StaticText(self, label='Select trial type')
         self.continue_button = wx.ToggleButton(self, label="Start Trial")
     
         grid_sizer = wx.GridBagSizer(5, 4)
 
-        grid_sizer.Add(trial, pos=(0, 0), span=(0,2), flag=wx.ALIGN_LEFT | wx.ALL, border=10)
+        grid_sizer.Add(self.trial, pos=(0, 0), span=(0,2), flag=wx.ALIGN_LEFT | wx.ALL, border=10)
         grid_sizer.Add(self.nback_choice, pos=(0, 2), span=(0,2), flag=wx.ALIGN_LEFT | wx.TOP | wx.BOTTOM, border=10)
         
-        grid_sizer.Add(text, pos=(1, 0), span=(0,4), flag=wx.ALIGN_LEFT | wx.ALL, border=10)
+        grid_sizer.Add(self.text, pos=(1, 0), span=(0,4), flag=wx.ALIGN_LEFT | wx.ALL, border=10)
         grid_sizer.Add(self.practice, pos=(2, 0), span=(0,2), flag=wx.ALIGN_LEFT| wx.TOP | wx.BOTTOM, border=10)
         grid_sizer.Add(self.real, pos=(2, 2), span=(0,2), flag=wx.ALIGN_LEFT | wx.TOP | wx.BOTTOM, border=10)
         grid_sizer.Add(self.continue_button, pos=(4, 0), span=(0,2), flag=wx.ALIGN_LEFT | wx.TOP, border=10)
@@ -61,7 +61,7 @@ class NbackPanel(TrialPanel):
     def run_trial(self, number):
         self.nback_choice.Enable(False)
         self.practice.Enable(False)
-        
+        self.real.Enable(False)
         
 
     def cancel_event(self, event):
@@ -77,3 +77,19 @@ class NbackPanel(TrialPanel):
         self.continue_button.SetValue(False)
         self.continue_button.SetLabel("Start Trial")
     
+
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.practice.Enable(enable)
+        self.real.Enable(enable)
+        self.nback_choice.Enable(enable)
+        self.trial.Enable(enable)
+        self.text.Enable(enable)
+        
+    
+    # def trial_buttons(self):
+    #     self.nback_choice.Enable(False)
+    #     self.real.Enable(False)
+    #     self.practice.Enable(False)
+        
+        

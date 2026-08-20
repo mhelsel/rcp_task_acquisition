@@ -187,3 +187,17 @@ class VowelSpacePanel(TrialPanel):
     #         self.continue_button.Enable(False)
     #         self.next_button.Enable(False)
         
+    
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        self.start_video_button.Enable(enable)
+        self.pause_video_button.Enable(enable)
+        
+        self.syllable_video_title.Enable(enable)
+        self.syllable_start_video_button.Enable(enable)
+        self.syllable_pause_video_button.Enable(enable)
+        self.trial_text.Enable(enable)
+        self.current_text.Enable(enable)
+        self.finish_text.Enable(enable)
+        self.continue_button.Enable(enable)
+        self.next_button .Enable(enable)

@@ -39,11 +39,11 @@ class SaraPanel(TrialPanel):
         self.assesment_choice.SetSelection(0)
         self.assesment_choice.Bind(wx.EVT_CHOICE, self.check_can_edit)
         grid_sizer = wx.GridBagSizer(7, 6)
-        grid_sizer.Add(self.assesment_task, pos=(0, 0), span=(0, 2),  flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER | wx.ALL, border=5)
-        grid_sizer.Add(self.assesment_choice, pos=(1, 0), span=(0, 4),  flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN  | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
-        grid_sizer.Add(self.seconds_text, pos=(2, 0), span=(0,4),  flag= wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
-        grid_sizer.Add(self.continue_button, pos=(3, 0), span=(0, 3),  flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
-        grid_sizer.Add(self.edit_button, pos=(3, 3), span=(0, 3),  flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
+        grid_sizer.Add(self.assesment_task,   pos=(0, 0), span=(0, 2), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER | wx.ALL, border=5)
+        grid_sizer.Add(self.assesment_choice, pos=(1, 0), span=(0, 4), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=5)
+        grid_sizer.Add(self.seconds_text,     pos=(2, 0), span=(0, 4), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
+        grid_sizer.Add(self.continue_button,  pos=(3, 0), span=(0, 3), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
+        grid_sizer.Add(self.edit_button,      pos=(3, 3), span=(0, 3), flag=wx.RESERVE_SPACE_EVEN_IF_HIDDEN | wx.ALIGN_CENTER_VERTICAL | wx.ALL, border=self.border)
         self.edit_button.Bind(wx.EVT_BUTTON, self.edit_score)
         return grid_sizer
     
@@ -145,6 +145,14 @@ class SaraPanel(TrialPanel):
         self.edit_button.Enable(False)
 
 
+    def enable_buttons(self, enable):
+        super().enable_buttons(enable)  
+        
+        self.assesment_task.Enable(enable)
+        self.assesment_choice.Enable(enable)
+        self.edit_button.Enable(enable)
+        self.seconds_text.Enable(enable)
+        self.assesment_choice.Enable(enable)
 
 
 
