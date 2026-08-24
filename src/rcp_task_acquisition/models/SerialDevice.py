@@ -24,7 +24,7 @@ class SerialDevice():
                                          baudrate=BAUDRATE, 
                                          write_timeout = WRITE_TIMEOUT)
                 self.serSuccess = True
-                logger.info('Serial connected')
+                logger.info(f'Serial connected to COM{str(i)}')
                 break
             except:
                 pass
@@ -36,9 +36,16 @@ class SerialDevice():
         
     def write(self, serial_str):
         if self.serSuccess:
+            logger.debug(self.ser)
             self.ser.write(serial_str.encode())
         
     def close(self):
         if self.serSuccess:
             self.ser.close()
             self.serSuccess = False
+            
+            
+# serial = SerialDevice()
+# serial.init_serial()
+# serial.write("1")
+# serial.close()

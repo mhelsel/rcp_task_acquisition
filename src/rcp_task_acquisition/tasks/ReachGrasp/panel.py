@@ -35,8 +35,6 @@ class ReachGraspPanel(TrialPanel):
         self.seconds_text = wx.StaticText(self, label= "Time: 0 mins, 0 secs")
         self.reaches_text = wx.StaticText(self, label= "Reaches completed in Block: 0")
         self.continue_button = wx.ToggleButton(self, label="Begin Trial", size=(self.button_width*2, -1))
-        # self.threshold_button = wx.ToggleButton(self, label="Bypass Grasp Threshold", size=(self.button_width*2, -1))
-        # self.threshold_button.Enable(False)
         
         grid_sizer = wx.GridBagSizer(8, 4)
         grid_sizer.Add(self.trial_text, pos=(0, 0), span=(0,4), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
@@ -52,11 +50,12 @@ class ReachGraspPanel(TrialPanel):
         grid_sizer.Add(self.seconds_text, pos=(4, 0), span=(0,1), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
         grid_sizer.Add(self.reaches_text, pos=(4, 1), span=(0,2), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
         grid_sizer.Add(self.continue_button, pos=(5, 0), span=(0,2), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
-        # grid_sizer.Add(self.threshold_button, pos=(5, 1), span=(0,3), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
         return grid_sizer
+    
     
     def add_count(self, grasp_count):
         self.grasp_count = grasp_count
+    
     
     def run_trial(self, number):
         self.seconds = 0
@@ -119,8 +118,7 @@ class ReachGraspPanel(TrialPanel):
 
 
     def enable_buttons(self, enable):
-        super().enable_buttons(enable)  
-        
+        super().enable_buttons(enable)
         self.trial_text.Enable(enable)
         self.hand_text.Enable(enable)
         self.left_radio.Enable(enable)
@@ -133,17 +131,6 @@ class ReachGraspPanel(TrialPanel):
         self.pinch_radio.Enable(enable)
         self.seconds_text.Enable(enable)
         self.reaches_text.Enable(enable)
-       
-        
-    # def trial_buttons(self):
-    #     self.left_radio.Enable(False)
-    #     self.right_radio.Enable(False)
-    #     self.hand_text.Enable(False)
-    #     self.object_text.Enable(False)
-    #     self.large_object_radio.Enable(False)
-    #     self.precision_object_radio.Enable(False)
-    #     self.type_text.Enable(False)
-    #     self.grasp_radio.Enable(False)
-    #     self.pinch_radio.Enable(False)
+
         
         

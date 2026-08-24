@@ -42,9 +42,11 @@ class TrialPanel(wx.Panel):
     
     
     def setup_instruction_playback(self):
-        self.video_title = wx.StaticText(self, label="")
-        self.start_video_button = wx.ToggleButton(self, label="Play Video", size=(150, -1))
-        self.pause_video_button = wx.ToggleButton(self, label="Pause Video", size=(150, -1))
+        static_box = wx.StaticBox(self, wx.ID_ANY, "Video Instructions")
+        
+        self.video_title = wx.StaticText(static_box, label="")
+        self.start_video_button = wx.ToggleButton(static_box, label="Play Video", size=(150, -1))
+        self.pause_video_button = wx.ToggleButton(static_box, label="Pause Video", size=(150, -1))
         self.pause_video_button.Enable(False)
         self.start_video_button.Enable(False)
         grid_sizer = wx.GridBagSizer(3,2)
@@ -53,7 +55,6 @@ class TrialPanel(wx.Panel):
         grid_sizer.Add(self.start_video_button, pos=(1, 0), span=(0,1), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
         grid_sizer.Add(self.pause_video_button, pos=(1, 1), span=(0,1), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border)
 
-        static_box = wx.StaticBox(self, wx.ID_ANY, "Video Instructions")
         static_box_sizer = wx.StaticBoxSizer(static_box, wx.VERTICAL)
         static_box_sizer.Add(grid_sizer, 1, wx.EXPAND | wx.ALL, 5)
 

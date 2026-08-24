@@ -128,10 +128,10 @@ class HardwarePanel(wx.Panel):
         user_input_count = 0
         vertical_pos = 0
         horizontal_pos = 0
-        
+        labjack_box = wx.StaticBox(self, label="Labjack Setup")
         labjack_sizer = wx.GridBagSizer(len(HEADERS), len(HARDWARE_LIST))
         for header in HEADERS:
-            new_header = wx.StaticText(self, label=header)
+            new_header = wx.StaticText(labjack_box, label=header)
             labjack_sizer.Add(new_header, pos=(vertical_pos,horizontal_pos), span=(0,1), flag=wx.ALL, border=self.border)
             horizontal_pos+=1
         vertical_pos+=1
@@ -141,15 +141,15 @@ class HardwarePanel(wx.Panel):
             if hardware not in self.row_list:
                 user_input_list.append(hardware)
         for hardware in self.row_list:
-            in_use = wx.CheckBox(self, id=wx.ID_ANY)
+            in_use = wx.CheckBox(labjack_box, id=wx.ID_ANY)
             in_use.Bind(wx.EVT_CHECKBOX, self.update_options)
             
-            name = (wx.StaticText(self, label=hardware) 
+            name = (wx.StaticText(labjack_box, label=hardware) 
                     if "user" not in hardware.lower() 
-                    else wx.TextCtrl(self, value=hardware))
+                    else wx.TextCtrl(labjack_box, value=hardware))
             name.Enable(False)   
             
-            labjack = wx.Choice(self, 
+            labjack = wx.Choice(labjack_box, 
                                 id=wx.ID_ANY, 
                                 choices=LABJACK_PIN_LIST)
             labjack.Bind(wx.EVT_CHOICE, self._on_choice_labjack)
@@ -157,7 +157,7 @@ class HardwarePanel(wx.Panel):
 
             
             analog_strings = [str(volt_range) for volt_range in ANALOG_RANGES]
-            voltage_ranges = wx.Choice(self, 
+            voltage_ranges = wx.Choice(labjack_box, 
                                 id=wx.ID_ANY, 
                                 choices=analog_strings)
             voltage_ranges.SetSelection(0)
@@ -202,7 +202,7 @@ class HardwarePanel(wx.Panel):
             self.hardware_list.append(new_hardware)
         self._update_lists(self.hardware_list)
         
-        labjack_box = wx.StaticBox(self, label="Labjack Setup")
+        
         hardware_sizer = wx.StaticBoxSizer(labjack_box, wx.HORIZONTAL)
         hardware_sizer.Add(labjack_sizer, 1, wx.EXPAND | wx.ALL, 15)
         return hardware_sizer
@@ -226,26 +226,27 @@ class HardwarePanel(wx.Panel):
         grid_sizer = wx.GridBagSizer(len(CAMERA_HEADERS), len(self.cam_serial_numbers))
         vertical_pos = 0
         horizontal_pos = 0
+        camera_box = wx.StaticBox(self, label="Camera Setup")
         
         for header in CAMERA_HEADERS:
-            new_header = wx.StaticText(self, label=header)
+            new_header = wx.StaticText(camera_box, label=header)
             grid_sizer.Add(new_header, pos=(vertical_pos,horizontal_pos), span=(0,1), flag=wx.ALL, border=self.border)
             horizontal_pos+=1
         vertical_pos+=1
        
         for key in cam_config: 
             
-            in_use = wx.CheckBox(self, id=wx.ID_ANY)
+            in_use = wx.CheckBox(camera_box, id=wx.ID_ANY)
             in_use.Bind(wx.EVT_CHECKBOX, self.update_options)
             
-            name = wx.StaticText(self, label=key)
+            name = wx.StaticText(camera_box, label=key)
             name.Enable(False)
             
-            serial = wx.Choice(self, choices=self.cam_serial_numbers)
+            serial = wx.Choice(camera_box, choices=self.cam_serial_numbers)
             serial.Bind(wx.EVT_CHOICE, self._on_choice_cameras)
             serial.Enable(False)
 
-            is_primary = (wx.RadioButton(self, style=wx.RB_GROUP) 
+            is_primary = (wx.RadioButton(camera_box, style=wx.RB_GROUP) 
                           if first_cam else wx.RadioButton(self))
             
             self.framerate_decrease_options = ["1","2"]
@@ -254,7 +255,7 @@ class HardwarePanel(wx.Panel):
             # gig_e = wx.CheckBox(self, id=wx.ID_ANY)
             # gig_e.Enable(False)
             
-            flip_vid = wx.CheckBox(self, id=wx.ID_ANY)
+            flip_vid = wx.CheckBox(camera_box, id=wx.ID_ANY)
             flip_vid.Enable(False)
             
             first_cam= False
@@ -294,7 +295,7 @@ class HardwarePanel(wx.Panel):
             self.camera_list.append(new_camera)
         self._update_lists(self.camera_list, is_labjack=False)
         
-        camera_box = wx.StaticBox(self, label="Camera Setup")
+        
         camera_sizer = wx.StaticBoxSizer(camera_box, wx.HORIZONTAL)
         camera_sizer.Add(grid_sizer, 1, wx.EXPAND | wx.ALL, 15)
         

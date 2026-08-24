@@ -208,6 +208,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TIMER, self.cams.vidPlayer, self.liveTimer)
         self.thread.start()
         self.task_active = False
+        self.button_toggled_on = False
         self.disable_timer = wx.Timer(self, wx.ID_ANY)
         
         self.Bind(wx.EVT_SIZE, self.on_resize)
@@ -218,7 +219,10 @@ class MainFrame(wx.Frame):
         # pass
     
     def run_task(self, event):
-        if self.task_button.GetValue():
+        # time.sleep(2)
+        # if self.task_button.GetValue():
+        # if self.button_toggled_on:
+        if self.task_button.is_active():
             self.task_active = True
             self.trial_dict = {}
             self.start_time = str(f'{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}Z') 
@@ -252,6 +256,8 @@ class MainFrame(wx.Frame):
                 self.trial_panel.update_trial(trial, syllable)
             self.trial_panel.start_new_trial()
             self.trial_panel.show()
+            self.task_button.SetValue(True)
+            
             # if not self.rest_timer.IsRunning():
             #     self.rest_timer.Start(1000)
         else:
@@ -272,7 +278,7 @@ class MainFrame(wx.Frame):
             
             self.finish.value = 0
             # self.labjack_stream_button.Enable(True)
-            if self.labjack_stream_button.GetValue():
+            if self.labjack_stream_button.is_active():
                 self.labjack_stream_button.SetValue(False)
                 self.labjack_stream_button.SetLabel("Stream Labjack")
             # self.labjack_stream_button.Enable(True)
@@ -284,6 +290,10 @@ class MainFrame(wx.Frame):
             self.rest_timer.Stop()
         self.widget_panel.enable_buttons(True)
         self.ctrl_panel.enable_buttons(True)
+        self.Enable()
+        # self.task_button.SetBackgroundColour(wx.NullColour)#(-1,-1,-1,255))
+        
+        self.figure.canvas.draw()
 
 
     def trial_event(self, event):
@@ -478,6 +488,7 @@ class MainFrame(wx.Frame):
         clicked_button = event.GetEventObject()
         button_label = clicked_button.GetLabel()
         logger.debug(f"button: {clicked_button}, {button_label}")
+        self.Enable(True)
         if button_label == "Abort":
             self.rec.SetValue(False)
             self.recordCam(event)
@@ -488,7 +499,6 @@ class MainFrame(wx.Frame):
             self.shared.value = -1
         elif self.play.GetValue() == True or (button_label == "Task Master Acquisition" and self.hardware_test == False):
             if button_label == "Task Master Acquisition":
-                self.Enable()
                 self.hardware_test = True
                 self.hardware_test_panel.Show()
                 if not self.task_active:
@@ -496,10 +506,12 @@ class MainFrame(wx.Frame):
                     self.msgq.put("hardware_test")
                     if not is_success:
                         logger.error("Error loading labjack_stream")
-                else:
-                    self.labjack_stream_button.SetValue(True)
-                    self.labjack_stream_button.Enable(False)
-                    self.labjack_stream_button.SetLabel("Stop Labjack")
+                    else:
+                        self.labjack_stream_button.SetValue(True)
+                        self.labjack_stream_button.Enable(False)
+                        self.labjack_stream_button.SetLabel("Stop Labjack")
+                self.hardware_button.SetValue(True)
+                self.button_toggled_on = False
             if not self.liveTimer.IsRunning():
                 self.cams.live_start()
                 self.liveTimer.Start(150)
@@ -734,8 +746,10 @@ class MainFrame(wx.Frame):
             # self.cams.deinitThreads()
         return True          
     
+    
     def tens_pulse(self, event):
         self.serial_device.write("A")
+    
     
     def quitButton(self, event):
         """
@@ -964,7 +978,7 @@ class MainFrame(wx.Frame):
     def disable_gui(self, event):
         handle = event.GetEventObject()
         logger.debug(f"handle is {handle}")
-        
+        self.button_toggled_on = False
         match handle:
             case self.task_button:
                 logger.debug("in disable gui from handle")
@@ -985,8 +999,14 @@ class MainFrame(wx.Frame):
             case _:
                 pass
         
-
+        # self.Enable(False)
+        self.figure.canvas.draw()
+        
+                    
         self.disable_timer.StartOnce(80)
+        
+        
+        
 
 
     def labjack_stream(self,event):

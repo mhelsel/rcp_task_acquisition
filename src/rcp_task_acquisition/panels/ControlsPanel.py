@@ -15,6 +15,8 @@ from rcp_task_acquisition.tasks.Sara.panel import SaraPanel
 from rcp_task_acquisition.tasks.VerbGeneration.panel import VerbGenerationPanel
 from rcp_task_acquisition.tasks.Calibration.panel import Calibration
 
+from rcp_task_acquisition.models.ToggleButton import ToggleButton
+
 
 class ControlsPanel(wx.Panel):
     def __init__(self,parent, ctrl_panel, psychopy_monitor, monitor_size, task="task"):
@@ -72,7 +74,7 @@ class ControlsPanel(wx.Panel):
         self.camera_toggle = wx.Button(self, label="Toggle Cameras", size=(button_width*2, -1))
         self.task_sizer.Add(self.camera_toggle, pos=(vertical_position,0), span=(0,2), flag=wx.LEFT, border=white_space)
 
-        self.hardware_button = wx.ToggleButton(self, id=wx.ID_ANY, label="Hardware Test",size=(button_width*2, -1))
+        self.hardware_button = ToggleButton(self, id=wx.ID_ANY, label="Hardware Test",size=(button_width*2, -1))
         self.task_sizer.Add(self.hardware_button, pos=(vertical_position,2), span=(0,2), flag=wx.LEFT, border=white_space)
         
         vertical_position+=1
@@ -82,7 +84,7 @@ class ControlsPanel(wx.Panel):
         
         vertical_position+=1
                 
-        self.session_button = wx.ToggleButton(self, id=wx.ID_ANY, label="Start Task",size=(button_width*4+15, -1))
+        self.session_button = ToggleButton(self, id=wx.ID_ANY, label="Start Task",size=(button_width*4+15, -1))
         self.task_sizer.Add(self.session_button, pos=(vertical_position,0), span=(0,4), flag=wx.LEFT, border=white_space)
         
         vertical_position+=1
@@ -183,47 +185,47 @@ class CameraControlPanel(wx.Panel):
         white_space = 0
         vpos = 0
         
-        self.init = wx.ToggleButton(self, id=wx.ID_ANY, label="Enable", size=(button_width,-1))
+        self.init = wx.ToggleButton(camctrlbox, id=wx.ID_ANY, label="Enable", size=(button_width,-1))
         camsizer.Add(self.init, pos=(vpos,0), span=(1,2), flag=wx.ALL, border=white_space)
         
-        self.reset = wx.Button(self, id=wx.ID_ANY, label="Reset", size=(button_width, -1))
+        self.reset = wx.Button(camctrlbox, id=wx.ID_ANY, label="Reset", size=(button_width, -1))
         camsizer.Add(self.reset, pos=(vpos,3), span=(1,3), flag=wx.ALL, border=white_space)
         
-        self.update_settings = wx.Button(self, id=wx.ID_ANY, label="Update Settings", size=(button_width*2, -1))
+        self.update_settings = wx.Button(camctrlbox, id=wx.ID_ANY, label="Update Settings", size=(button_width*2, -1))
         camsizer.Add(self.update_settings, pos=(vpos,6), span=(1,6), flag=wx.ALL, border=white_space)
         self.update_settings.Enable(False)
         
         vpos+=1
-        self.play = wx.ToggleButton(self, id=wx.ID_ANY, label="Live", size=(button_width, -1))
+        self.play = wx.ToggleButton(camctrlbox, id=wx.ID_ANY, label="Live", size=(button_width, -1))
         camsizer.Add(self.play, pos=(vpos,0), span=(1,3), flag=wx.ALL, border=white_space)
         self.play.Enable(False)
         
-        self.rec = wx.ToggleButton(self, id=wx.ID_ANY, label="Record", size=(button_width, -1))
+        self.rec = wx.ToggleButton(camctrlbox, id=wx.ID_ANY, label="Record", size=(button_width, -1))
         camsizer.Add(self.rec, pos=(vpos,3), span=(1,3), flag=wx.ALL, border=white_space)
         self.rec.Enable(False)
 
-        self.exposure_button = wx.Button(self, id=wx.ID_ANY, label="Set Exposure", size=(button_width*2, -1))
+        self.exposure_button = wx.Button(camctrlbox, id=wx.ID_ANY, label="Set Exposure", size=(button_width*2, -1))
         camsizer.Add(self.exposure_button, pos=(vpos,6), span=(0,6), flag=wx.ALL, border=white_space)
         self.exposure_button.Enable(False)
         
         vpos+=1
-        self.set_crop = wx.ToggleButton(self, id=wx.ID_ANY, label="Set Crop")
+        self.set_crop = wx.ToggleButton(camctrlbox, id=wx.ID_ANY, label="Set Crop")
         camsizer.Add(self.set_crop, pos=(vpos,0), span=(0,3), flag=wx.TOP | wx.BOTTOM, border=3)
         self.set_crop.Enable(False)
         
-        self.crop = wx.CheckBox(self, id=wx.ID_ANY, label="Crop", size=(button_width, -1))
+        self.crop = wx.CheckBox(camctrlbox, id=wx.ID_ANY, label="Crop", size=(button_width, -1))
         camsizer.Add(self.crop, pos=(vpos,3), span=(0,3), flag=wx.TOP, border=0)
         self.crop.SetValue(True)
             
-        self.minRec = wx.TextCtrl(self, value='20', size=(50, -1))
+        self.minRec = wx.TextCtrl(camctrlbox, value='20', size=(50, -1))
         self.minRec.Enable(False)
-        min_text = wx.StaticText(self, label='M:')
+        min_text = wx.StaticText(camctrlbox, label='M:')
         camsizer.Add(self.minRec, pos=(vpos,7), span=(1,2), flag=wx.ALL, border=white_space)
         camsizer.Add(min_text, pos=(vpos,6), span=(1,1), flag=wx.TOP, border=5)
         
-        self.secRec = wx.TextCtrl(self, value='0', size=(50, -1))
+        self.secRec = wx.TextCtrl(camctrlbox, value='0', size=(50, -1))
         self.secRec.Enable(False)
-        sec_text = wx.StaticText(self, label='S:')
+        sec_text = wx.StaticText(camctrlbox, label='S:')
         camsizer.Add(self.secRec, pos=(vpos,10), span=(1,2), flag=wx.ALL, border=white_space)
         camsizer.Add(sec_text, pos=(vpos,9), span=(1,1), flag=wx.TOP, border=5)
         

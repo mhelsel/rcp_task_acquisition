@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.lines import Line2D
-
+from rcp_task_acquisition.models.ToggleButton import ToggleButton
 from rcp_task_acquisition.utils.constants import PLOT_CONSTANTS, LINE_STYLES, COLORS, DEFAULTS
 from rcp_task_acquisition.utils.logger import get_logger
 logger = get_logger("./models/GraphPanel") 
@@ -106,18 +106,18 @@ class GraphPanel(wx.Panel):
         options = self.hardware
     
         options.insert(0, " ")
-        self.labjack_stream_button = wx.ToggleButton(panel, id=wx.ID_ANY, label="Stream Labjack", size=(self.button_width, -1))
+        self.labjack_stream_button = ToggleButton(labjack_box, id=wx.ID_ANY, label="Stream Labjack", size=(self.button_width, -1))
         labjack_sizer.Add(self.labjack_stream_button,pos=(0,0), span=(0,2), flag=wx.ALL, border=self.white_space)
         
-        labjack_choice = wx.Choice(panel, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
+        labjack_choice = wx.Choice(labjack_box, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
         self.labjack_choices.append(labjack_choice)
         labjack_sizer.Add(labjack_choice, pos=(1,0), span=(0,2), flag=wx.ALL, border=self.white_space)
         
-        labjack_choice = wx.Choice(panel, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
+        labjack_choice = wx.Choice(labjack_box, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
         self.labjack_choices.append(labjack_choice)
         labjack_sizer.Add(labjack_choice, pos=(2,0), span=(0,2), flag=wx.ALL, border=self.white_space)
         
-        labjack_choice = wx.Choice(panel, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
+        labjack_choice = wx.Choice(labjack_box, id=wx.ID_ANY, choices=options, size=(self.button_width, -1))
         self.labjack_choices.append(labjack_choice)
         labjack_sizer.Add(labjack_choice, pos=(3,0), span=(0,2), flag=wx.ALL, border=self.white_space)
 
@@ -134,8 +134,8 @@ class GraphPanel(wx.Panel):
         cam_box = wx.StaticBox(panel, label="Camera Tests")
         cam_sizer = wx.GridBagSizer(1,2)
         
-        self.contrast_test = wx.ToggleButton(panel, id=wx.ID_ANY, label="Test Contrast", size=(button_width, -1))
-        self.focus_test = wx.ToggleButton(panel, id=wx.ID_ANY, label="Test Focus", size=(button_width, -1))
+        self.contrast_test = wx.ToggleButton(cam_box, id=wx.ID_ANY, label="Test Contrast", size=(button_width, -1))
+        self.focus_test = wx.ToggleButton(cam_box, id=wx.ID_ANY, label="Test Focus", size=(button_width, -1))
 
         cam_sizer.Add(self.contrast_test, pos=(0,0), span=(0,2), flag=wx.ALL, border=self.white_space)
         cam_sizer.Add(self.focus_test, pos=(1,0), span=(0,2), flag=wx.ALL, border=self.white_space)
@@ -334,6 +334,8 @@ class GraphPanel(wx.Panel):
         
     def enable_buttons(self, enable):
         self.labjack_stream_button.Enable(enable)
+        self.contrast_test.Enable(enable)
+        self.focus_test.Enable(enable)
         for choice in self.labjack_choices:
             choice.Enable(enable)
         
