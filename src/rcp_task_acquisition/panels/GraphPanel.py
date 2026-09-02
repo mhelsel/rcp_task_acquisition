@@ -17,7 +17,7 @@ class GraphPanel(wx.Panel):
     
     '''
     def __init__(self, parent, gui_size) -> None:
-        wx.Panel.__init__(self, parent, -1,style=wx.SUNKEN_BORDER)
+        super().__init__(parent, -1,style=wx.SUNKEN_BORDER)
         
         # most of these are placeholders since we will not know which hardware
         # will be used until the task is selected

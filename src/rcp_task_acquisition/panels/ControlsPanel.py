@@ -18,7 +18,7 @@ from rcp_task_acquisition.tasks.Calibration.panel import Calibration
 
 class ControlsPanel(wx.Panel):
     def __init__(self,parent, ctrl_panel, psychopy_monitor, monitor_size, task="task"):
-        wx.Panel.__init__(self, parent, -1,style=wx.SUNKEN_BORDER)
+        super().__init__(parent, -1,style=wx.SUNKEN_BORDER)
         
         vertical_spacer = wx.GridBagSizer(5, 5)
         vertical_position = 0
@@ -153,7 +153,7 @@ class ControlsPanel(wx.Panel):
     
 class CameraControlPanel(wx.Panel):
     def __init__(self, parent, button_width):
-        wx.Panel.__init__(self, parent, -1,style=wx.BORDER_NONE)
+        super().__init__(parent, -1,style=wx.BORDER_NONE)
         camctrlbox = wx.StaticBox(self, label="Camera Control")
         camsizer = wx.GridBagSizer(5, 5)
         bsizer = wx.StaticBoxSizer(camctrlbox, wx.HORIZONTAL)

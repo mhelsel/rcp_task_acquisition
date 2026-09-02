@@ -10,7 +10,7 @@ logger = get_logger("./panels/ImagePanel")
 class ImagePanel(wx.Panel):
     def __init__(self, parent, **kwargs):
 
-        wx.Panel.__init__(self, parent, -1,style=wx.SUNKEN_BORDER)
+        super().__init__(parent, -1,style=wx.SUNKEN_BORDER)
         self.figure = Figure()
         self.canvas = FigureCanvas(self, -1, self.figure)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
