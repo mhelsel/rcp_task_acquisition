@@ -39,6 +39,7 @@ class NaturalisticSpeechPanel(TrialPanel):
             message (wx dialog panel)
 
         '''
+        
         self.image_names = os.listdir(c.IMG_DIR)
         
         for image in self.image_names:
@@ -47,7 +48,7 @@ class NaturalisticSpeechPanel(TrialPanel):
                 self.image_path.append(image_path)
             except Exception as e:
                 logger.error(f"Unable to load {image}, Error: {e}")
-        
+        self.image_names += c.NON_IMAGE_TASKS
         self.image_choice= wx.Choice(self, 
                                        id=wx.ID_ANY, 
                                        choices=self.image_names,
@@ -120,9 +121,11 @@ class NaturalisticSpeechPanel(TrialPanel):
 
 
     def update_image(self,event):
-        
         self.selection = self.image_choice.GetSelection()
-        wx_image = wx.Image(self.image_path[self.selection], wx.BITMAP_TYPE_ANY)
+        if self.selection >= len(self.image_path):
+            wx_image = wx.Image(250, 250, clear=True)
+        else:
+            wx_image = wx.Image(self.image_path[self.selection], wx.BITMAP_TYPE_ANY)
         wx_image = wx_image.Scale(250, 150)
         wx_image.ConvertToBitmap()
         
