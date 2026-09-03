@@ -54,9 +54,11 @@ class MainFrame(wx.Frame):
         #setting up screen for stimulus thread
         self.user_cfg = file_utils.read_config('userdata.yaml')
         # screen_settings = self.user_cfg["screen_settings"]
-        
+
+        self.warning = Warning()
+
         # Settting the GUI size and panels design
-        displays = (wx.Display(i) for i in range(wx.Display.GetCount())) # Gets the number of displays
+        displays = tuple(wx.Display(i) for i in range(wx.Display.GetCount())) # Gets the number of displays
         screenSizes = [display.GetGeometry().GetSize() for display in displays] # Gets the size of each display
         logger.debug(f"screenSizes: {screenSizes}")
         # index = 1 # For display 1.
@@ -166,7 +168,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_CHAR_HOOK, self.OnKeyPressed)
         self.exit_stimulus = False
         self.Bind(wx.EVT_CHECKBOX, self.update_crop)
-        self.warning = Warning()
         #check the display is correct
         #check the correct monitors are displayed
         # if wx.Display.GetCount() < 2:
