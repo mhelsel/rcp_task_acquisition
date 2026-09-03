@@ -8,6 +8,7 @@ logger = get_logger("./panels/TrialPanel")
 
 class TrialPanel(wx.Panel):
     def __init__(self, parent=None):
+        super().__init__(parent)
         self.seconds = 0
         self.trial_number = 0
         self.countdown_start = 0
@@ -20,8 +21,7 @@ class TrialPanel(wx.Panel):
         self.start_video_button = None
         self.pause_video_button = None
         self.video_title = None
-        
-        wx.Panel.__init__(self, parent, -1, size=wx.Size(-1,-1))
+
         vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         vertical_sizer.Add(self._setup_buttons(), 0, wx.ALIGN_LEFT | wx.ALL, self.border)
         self.SetSizer(vertical_sizer)

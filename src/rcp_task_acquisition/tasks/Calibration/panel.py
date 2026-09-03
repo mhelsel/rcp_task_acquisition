@@ -13,7 +13,6 @@ class Calibration(TrialPanel):
         self.seconds = 0
         self.display_secs = 0
         self.display_mins = 0
-        wx.Panel.__init__(self, parent, -1, size=wx.Size(-1,-1))
         vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         vertical_sizer.Add(self._set_up_timer(), 0, wx.ALIGN_LEFT | wx.ALL, self.border)
         self.SetSizer(vertical_sizer)
