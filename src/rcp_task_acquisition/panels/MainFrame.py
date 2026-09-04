@@ -641,7 +641,7 @@ class MainFrame(wx.Frame):
             self.meta['EndTime_Local']= self.end_time
             self.meta['EndTime_UTC']= self.end_time_utc
             file_utils.write_metadata(self.meta, self.metapath)
-            deidentify.deidentify_one_session(self.sess_dir)
+            deidentify.deidentify_one_session(self.sess_dir) 
         else:
             #remove entire directory
             logger.debug(self.sess_dir)
