@@ -29,6 +29,7 @@ from rcp_task_acquisition.panels.ControlsPanel import ControlsPanel
 from rcp_task_acquisition.panels.ImagePanel import ImagePanel
 from rcp_task_acquisition.models.SerialDevice import SerialDevice
 from rcp_task_acquisition.models.CameraFrontend import Camera
+from rcp_task_acquisition.utils.deidentify_dates import DateDeidentification
 from rcp_task_acquisition.utils.task_acquisistion_version import __version__
 from rcp_task_acquisition.utils.logger import get_logger
 logger = get_logger("./panels/MainFrame") 
@@ -586,6 +587,7 @@ class MainFrame(wx.Frame):
             
     def add_metadata(self):
         metadata = MetadataPanel()
+        deidentify = DateDeidentification(self.user_cfg)
         params = None
         try:
             params = json.loads(self.resultsq.get())
@@ -639,6 +641,7 @@ class MainFrame(wx.Frame):
             self.meta['EndTime_Local']= self.end_time
             self.meta['EndTime_UTC']= self.end_time_utc
             file_utils.write_metadata(self.meta, self.metapath)
+            deidentify.deidentify_one_session(self.sess_dir)
         else:
             #remove entire directory
             logger.debug(self.sess_dir)
