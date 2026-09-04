@@ -77,7 +77,7 @@ class MainFrame(wx.Frame):
         screenH = screenSizes[index][1]
         self.gui_size = (int(screenW*0.9), int(screenW*0.45))
         # self.gui_size = (screenW-90, screenH-55)
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = 'Task Master Aquisition',
+        super().__init__(parent, id = wx.ID_ANY, title = 'Task Master Aquisition',
                             size = wx.Size(self.gui_size), pos = wx.DefaultPosition, 
                             style = wx.RESIZE_BORDER|wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
