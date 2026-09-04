@@ -169,6 +169,8 @@ class multiCam_DLC_Cam(Process):
                     elif msg == 'Start':
                         cam.BeginAcquisition()
                         if ismaster or isunconnected:
+                            # cam.LineSelector.SetValue(PySpin.LineSelector_Line1)
+                            # cam.LineSource.SetValue(PySpin.LineSource_Counter0Active)
                             self.frm.value = 0
                             self.camq.get()
                             cam.TriggerMode.SetValue(PySpin.TriggerMode_Off)
@@ -260,13 +262,12 @@ class multiCam_DLC_Cam(Process):
                             
                         cam.EndAcquisition()
                         cam.TriggerMode.SetValue(PySpin.TriggerMode_On)
-                        self.frmGrab.value = 0
+                        
                         if ismaster:
-                            cam.LineSelector.SetValue(PySpin.LineSelector_Line1)
-                            cam.LineSource.SetValue(PySpin.LineSource_FrameTriggerWait)
-                            cam.LineInverter.SetValue(True)
-                            cam.LineSelector.SetValue(PySpin.LineSelector_Line1)
-                            cam.LineSource.SetValue(PySpin.LineSource_Counter0Active)
+                            self.frmGrab.value = 0
+                            # cam.LineSelector.SetValue(PySpin.LineSelector_Line1)
+                            # cam.LineSource.SetValue(PySpin.LineSource_FrameTriggerWait)
+                            # cam.LineInverter.SetValue(True)
                         self.camq_p2read.put('done')
                     
                     elif msg == 'updateSettings':

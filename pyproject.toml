@@ -15,5 +15,6 @@ requires-python = ">=3.10, <3.11"
 [project.scripts]
 rcp-task-acquisition = "rcp_task_acquisition.__main__:run_app"
 create-shortcut = "rcp_task_acquisition.utils.shortcut:create_shortcut"
+deidentify-data = "rcp_task_acquisition.utils.deidentify_dates:run_all_dates"
 
 [tool.setuptools_scm]
