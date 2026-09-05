@@ -8,7 +8,6 @@ and output from FIO4 aka 'Extra Digital Out' as a chain of 5 ms HIGH, 5 ms LOW.
 """
 
 
-
 class SimpleLCG:
     def __init__(self, seed=12345):
         self.state = seed & 0xFFFFFFFF
@@ -21,7 +20,7 @@ class SimpleLCG:
         return 1 + (self.next_random() % 10)
 
 
-rec_dur = 3600; # duration of recording in seconds
+rec_dur = 3600  # duration of recording in seconds
 
 rng = SimpleLCG(seed=12345)
 

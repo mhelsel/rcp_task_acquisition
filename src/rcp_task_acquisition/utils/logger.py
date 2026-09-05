@@ -7,7 +7,6 @@ from pathlib import Path
 from rcp_task_acquisition.utils.constants import RAW_DATA_DIR
 
 
-
 def get_logger(name: str = "cart") -> logging.Logger:
     """
     Get a logger with both file and console output.
@@ -26,9 +25,9 @@ def get_logger(name: str = "cart") -> logging.Logger:
     log_dir.mkdir(parents=True, exist_ok=True)
 
     # Log file name
-    log_filename =  os.path.join(log_dir, f'{date_string}_log.log')
+    log_filename = os.path.join(log_dir, f"{date_string}_log.log")
     if not os.path.exists(log_filename):
-        open(log_filename,'w').close()
+        open(log_filename, "w").close()
 
     # Create logger
     logger = logging.getLogger(name)
@@ -46,8 +45,7 @@ def get_logger(name: str = "cart") -> logging.Logger:
 
         # Formatter
         formatter = logging.Formatter(
-            fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
-            datefmt="%H:%M:%S"
+            fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s", datefmt="%H:%M:%S"
         )
         file_handler.setFormatter(formatter)
         console_handler.setFormatter(formatter)
