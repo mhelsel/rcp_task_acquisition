@@ -59,6 +59,7 @@ This is the outline for installing this program with the expected hardware confi
     - `git clone https://github.com/mmt-rcp/rcp_task_acquisition.git`
     - `cd rcp_task_acquisition`
     - `pip install -e .[dev]`
+    - `git config blame.ignoreRevsFile .git-blame-ignore-revs`  # only once/first time
     - `pre-commit install`  # only once/first time
     - `create-shortcut`
 3. The final step in the terminal (`create-shortcut`) creates an icon on the Desktop which can be selected to run the code.
