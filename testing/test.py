@@ -39,6 +39,7 @@ Note:
     For more information, see the implementation in our source code and the
     Python standard documentation.
 """
+
 from datetime import datetime
 import sys
 
@@ -49,15 +50,17 @@ MAX_REQUESTS = 10  # The number of eStreamRead calls that will be performed.
 
 # Open first found LabJack
 # handle = ljm.openS("ANY", "ANY", "ANY")  # Any device, Any connection, Any identifier
-#handle = ljm.openS("T8", "ANY", "ANY")  # T8 device, Any connection, Any identifier
+# handle = ljm.openS("T8", "ANY", "ANY")  # T8 device, Any connection, Any identifier
 handle = ljm.openS("T7", "ANY", "ANY")  # T7 device, Any connection, Any identifier
-#handle = ljm.openS("T4", "ANY", "ANY")  # T4 device, Any connection, Any identifier
-#handle = ljm.open(ljm.constants.dtANY, ljm.constants.ctANY, "ANY")  # Any device, Any connection, Any identifier
+# handle = ljm.openS("T4", "ANY", "ANY")  # T4 device, Any connection, Any identifier
+# handle = ljm.open(ljm.constants.dtANY, ljm.constants.ctANY, "ANY")  # Any device, Any connection, Any identifier
 
 info = ljm.getHandleInfo(handle)
-print("Opened a LabJack with Device type: %i, Connection type: %i,\n"
-      "Serial number: %i, IP address: %s, Port: %i,\nMax bytes per MB: %i" %
-      (info[0], info[1], info[2], ljm.numberToIP(info[3]), info[4], info[5]))
+print(
+    "Opened a LabJack with Device type: %i, Connection type: %i,\n"
+    "Serial number: %i, IP address: %s, Port: %i,\nMax bytes per MB: %i"
+    % (info[0], info[1], info[2], ljm.numberToIP(info[3]), info[4], info[5])
+)
 
 deviceType = info[0]
 
@@ -97,8 +100,7 @@ try:
         if deviceType == ljm.constants.dtT7:
             #     Negative Channel = 199 (Single-ended)
             #     Settling = 0 (auto)
-            aNames.extend(["AIN0_NEGATIVE_CH", "STREAM_SETTLING_US",
-                           "AIN1_NEGATIVE_CH"])
+            aNames.extend(["AIN0_NEGATIVE_CH", "STREAM_SETTLING_US", "AIN1_NEGATIVE_CH"])
             aValues.extend([199, 0, 199])
 
     # Write the analog inputs' negative channels (when applicable), ranges,
@@ -134,8 +136,10 @@ try:
         for j in range(0, numAddresses):
             ainStr += "%s = %0.5f, " % (aScanListNames[j], aData[j])
         print("  1st scan out of %i: %s" % (scans, ainStr))
-        print("  Scans Skipped = %0.0f, Scan Backlogs: Device = %i, LJM = "
-              "%i" % (curSkip/numAddresses, ret[1], ret[2]))
+        print(
+            "  Scans Skipped = %0.0f, Scan Backlogs: Device = %i, LJM = "
+            "%i" % (curSkip / numAddresses, ret[1], ret[2])
+        )
         i += 1
 
     end = datetime.now()
@@ -165,5 +169,4 @@ except Exception:
     print(e)
 
 # Close handle
-ljm.close(handle)# -*- coding: utf-8 -*-
-
+ljm.close(handle)  # -*- coding: utf-8 -*-
