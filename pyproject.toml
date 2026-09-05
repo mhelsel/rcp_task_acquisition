@@ -27,7 +27,8 @@ deidentify-data = "rcp_task_acquisition.utils.deidentify_dates:run_all_dates"
 
 [tool.ruff]
 line-length = 100
-ignore = [
+
+lint.ignore = [
 	"FURB171"  # Ignore the "add-unicode-string" rule
 ]
 
