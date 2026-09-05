@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 import os
 from pathlib import Path
+
 from pyshortcuts import make_shortcut
 
 

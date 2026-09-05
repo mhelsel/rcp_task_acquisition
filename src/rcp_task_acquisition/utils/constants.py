@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 import os
-from psychopy import core
-from pathlib import Path
 from enum import Enum
-import ruamel.yaml
+from pathlib import Path
 
+import ruamel.yaml
+from psychopy import core
 
 BASEDIR = Path(__file__).resolve().parent.parent.parent.parent
 CODE_DIR = Path(__file__).resolve().parent.parent

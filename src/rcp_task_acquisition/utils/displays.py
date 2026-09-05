@@ -1,7 +1,7 @@
 import time
+
 import numpy as np
-from psychopy.visual import Window
-from psychopy.visual import GratingStim
+from psychopy.visual import GratingStim, Window
 
 from rcp_task_acquisition.utils.logger import get_logger
 
@@ -64,7 +64,6 @@ class Window(Window):
         self._background.draw()
         # self._patch.draw()
         self.flip()
-        return
 
     def switch_patch(self):
         self._patch_is_light = not self._patch_is_light
@@ -144,7 +143,6 @@ class Window(Window):
             Unit of time (frames or seconds)
         """
 
-        #
         self._patch.tex = _highStateTexture
         self._state = True
         if units == "frames":
@@ -154,12 +152,9 @@ class Window(Window):
         else:
             raise Exception(f"{units} is an invalid unit of time")
 
-        #
         if mc == True and self._mc is not None:
             self.callOnFlip(self._mc.signal)
             # self._mc.signal()
-
-        return
 
     def clearStimuli(self):
         """ """
@@ -228,8 +223,6 @@ class Window(Window):
             self._patch.tex = _lowStateTexture
         self._state = True if value else False
 
-        return
-
     @property
     def patchCoords(self):
         return np.concatenate([self._patch.pos, self._patch.size])
@@ -261,4 +254,3 @@ class Window(Window):
             raise Exception("Background color must be in the range (-1, 1)")
         self._background.tex = np.full(self._textureShape, color)
         self._backgroundColor = color
-        return

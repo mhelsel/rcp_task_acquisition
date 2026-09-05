@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import serial
 
 from rcp_task_acquisition.utils.constants import BAUDRATE, WRITE_TIMEOUT

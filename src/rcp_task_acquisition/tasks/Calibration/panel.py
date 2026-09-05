@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import wx
 
 from rcp_task_acquisition.panels.TrialPanel import TrialPanel

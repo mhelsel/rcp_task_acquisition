@@ -1,7 +1,7 @@
 import wx
 import wx.lib.dialogs
-from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.figure import Figure
 
 from rcp_task_acquisition.utils.logger import get_logger
 

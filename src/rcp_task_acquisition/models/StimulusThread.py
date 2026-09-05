@@ -1,24 +1,25 @@
-import time
-import math
-from enum import Enum
-from queue import Empty
-import json
-from multiprocessing import Process
 import ast
+import json
+import math
+import time
+from enum import Enum
+from multiprocessing import Process
+from queue import Empty
+
 import rcp_task_acquisition.utils.file_utils as files
-from rcp_task_acquisition.tasks.UpdrsTap.BasicTaps import BasicTaps
-from rcp_task_acquisition.utils.displays import Window
-from rcp_task_acquisition.tasks.NaturalisticSpeech.NaturalisticSpeech import NaturalisticSpeech
+from rcp_task_acquisition.tasks.bases import StimulusBase
 from rcp_task_acquisition.tasks.Diadochokinesis.Diadochokinesis import Diadochokinesis
-from rcp_task_acquisition.tasks.VerbalFluency.VerbalFluency import VerbalFluency
-from rcp_task_acquisition.tasks.VowelSpace.VowelSpace import VowelSpace
+from rcp_task_acquisition.tasks.HardwareTest import HardwareTest
+from rcp_task_acquisition.tasks.NaturalisticSpeech.NaturalisticSpeech import NaturalisticSpeech
 from rcp_task_acquisition.tasks.NBack.NBack import N_back
 from rcp_task_acquisition.tasks.ReachGrasp.ReachGrasp import ReachGrasp
-from rcp_task_acquisition.tasks.ToneTaps.ToneTaps import ToneTapsClosed
 from rcp_task_acquisition.tasks.Sara.Sara import Sara
-from rcp_task_acquisition.tasks.HardwareTest import HardwareTest
+from rcp_task_acquisition.tasks.ToneTaps.ToneTaps import ToneTapsClosed
+from rcp_task_acquisition.tasks.UpdrsTap.BasicTaps import BasicTaps
+from rcp_task_acquisition.tasks.VerbalFluency.VerbalFluency import VerbalFluency
 from rcp_task_acquisition.tasks.VerbGeneration.VerbGeneration import VerbGeneration
-from rcp_task_acquisition.tasks.bases import StimulusBase
+from rcp_task_acquisition.tasks.VowelSpace.VowelSpace import VowelSpace
+from rcp_task_acquisition.utils.displays import Window
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./models/StimulusThread")

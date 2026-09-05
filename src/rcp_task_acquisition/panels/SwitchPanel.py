@@ -1,9 +1,10 @@
-import wx
 from enum import Enum
 
+import wx
+
+from rcp_task_acquisition.models.Warnings import Warning
 from rcp_task_acquisition.panels.LaunchPanel import LaunchPanel
 from rcp_task_acquisition.panels.MainFrame import MainFrame
-from rcp_task_acquisition.models.Warnings import Warning
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./panels/SwitchPanel")

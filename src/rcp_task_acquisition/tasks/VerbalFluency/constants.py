@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 # verbal fluency constants
 TRIAL_TIME = 60
 PHONEMIC_LIST = ['["F", "A", "S"]', '["C", "F", "L"]']

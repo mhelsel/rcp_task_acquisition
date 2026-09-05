@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-import sys
-import subprocess
-from pathlib import Path
 import importlib.metadata as importlib_metadata
+import subprocess
+import sys
+from pathlib import Path
 
 from rcp_task_acquisition.utils.logger import get_logger
 

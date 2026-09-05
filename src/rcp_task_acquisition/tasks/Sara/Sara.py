@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from psychopy import core
 
 from rcp_task_acquisition.tasks import bases

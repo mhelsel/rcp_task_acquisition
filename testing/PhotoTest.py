@@ -1,8 +1,9 @@
 # Screen on off for testing photodetector
 
 # imports
-from psychopy import core, visual, event
 import numpy as np
+from psychopy import core, event, visual
+
 from . import bases
 
 # Parameters

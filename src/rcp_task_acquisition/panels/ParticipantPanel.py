@@ -1,6 +1,8 @@
+import os
+
 import wx
 import wx.lib.scrolledpanel as scrolled
-import os
+
 from rcp_task_acquisition.models.ParticipantDatabase import ParticipantDatabase
 from rcp_task_acquisition.utils.constants import BASEDIR
 from rcp_task_acquisition.utils.logger import get_logger

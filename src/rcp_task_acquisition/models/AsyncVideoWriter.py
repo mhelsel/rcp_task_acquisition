@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
-import cv2
 import os
-from pathlib import Path
-
-from rcp_task_acquisition.utils.logger import get_logger
-from threading import Thread, Event
-from queue import Queue, Full, Empty
 import subprocess
 import threading
+from pathlib import Path
+from queue import Empty, Full, Queue
+from threading import Event, Thread
+
+import cv2
+
+from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./models/AsyncVideoWriter")
 

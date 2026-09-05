@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
-import wx
 import numpy as np
+import wx
 
+from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.tasks.Diadochokinesis.constants import (
+    DDK_PATHS,
     DDK_TRIAL_TIME,
     DDK_TRIALS,
-    DDK_PATHS,
     DDK_TRIALS_PER_SYLLABLE,
 )
-from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./panel/Diadochokinesis")

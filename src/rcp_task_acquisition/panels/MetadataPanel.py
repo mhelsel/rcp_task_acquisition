@@ -1,5 +1,6 @@
-import wx
 from dataclasses import dataclass
+
+import wx
 import wx.lib.scrolledpanel as scrolled
 
 from rcp_task_acquisition.utils.logger import get_logger

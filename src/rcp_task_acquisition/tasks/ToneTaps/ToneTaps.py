@@ -1,16 +1,16 @@
-# -*- coding: utf-8 -*-
 import time
-import pyaudio
+
 import numpy as np
-from psychopy import visual, core
+import pyaudio
+from psychopy import core, visual
 
 from rcp_task_acquisition.tasks import bases
-from rcp_task_acquisition.utils.constants import GLOBAL_CLOCK
 from rcp_task_acquisition.tasks.ToneTaps.constants import (
+    IVRY_TAPS_VIDEO_PATH,
     TAP_DURATION,
     TAP_FREQUENCY,
-    IVRY_TAPS_VIDEO_PATH,
 )
+from rcp_task_acquisition.utils.constants import GLOBAL_CLOCK
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./tasks/ToneTaps")

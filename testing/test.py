@@ -40,11 +40,10 @@ Note:
     Python standard documentation.
 """
 
-from datetime import datetime
 import sys
+from datetime import datetime
 
 from labjack import ljm
-
 
 MAX_REQUESTS = 10  # The number of eStreamRead calls that will be performed.
 
@@ -133,7 +132,7 @@ try:
 
         print("\neStreamRead %i" % i)
         ainStr = ""
-        for j in range(0, numAddresses):
+        for j in range(numAddresses):
             ainStr += "%s = %0.5f, " % (aScanListNames[j], aData[j])
         print("  1st scan out of %i: %s" % (scans, ainStr))
         print(

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Created on Fri Dec 12 15:13:28 2025
 
 @author: rld
 """
 
+import time
+
 import numpy as np
 import pyaudio
-import time
 
 DEVICE_INDEX = 0
 # --- Configuration ---

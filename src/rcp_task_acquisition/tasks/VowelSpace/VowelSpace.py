@@ -1,4 +1,5 @@
 import os
+
 import numpy as np
 
 from rcp_task_acquisition.tasks import bases
@@ -92,6 +93,7 @@ class VowelSpace(bases.StimulusBase):
             CHUNK = 1024
             file = c.VS_PATHS[trial]
             import wave
+
             import pyaudio
 
             path = os.path.join(c.STIM_DIR, file)
@@ -121,4 +123,4 @@ class VowelSpace(bases.StimulusBase):
             p.terminate()
 
         except:
-            logger.warn("No file, continuing without....")
+            logger.warning("No file, continuing without....")

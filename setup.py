@@ -1,6 +1,6 @@
 from pathlib import Path
-from setuptools import setup
 
+from setuptools import setup
 
 # Getting path to local whl files to be downloaded
 local_path: str = (

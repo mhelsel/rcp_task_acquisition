@@ -5,34 +5,35 @@ W Williamson, wallace.williamson@ucdenver.edu
 
 """
 
-import os
-import sys
-import time, datetime
-from multiprocessing import Value, Queue, Event
-import wx
-import wx.lib.dialogs
-import numpy as np
 import ctypes
-import shutil
+import datetime
 import json
+import os
+import shutil
+import sys
+import time
+from multiprocessing import Event, Queue, Value
 from pathlib import Path
 
-import rcp_task_acquisition.utils.file_utils as file_utils
-from rcp_task_acquisition.utils.file_utils import read_config
-from rcp_task_acquisition.models.StimulusThread import StimulusThread
-from rcp_task_acquisition.models.LabjackFrontend import LabjackFrontend
-from rcp_task_acquisition.models.Crop import Crop
-from rcp_task_acquisition.panels.GraphPanel import GraphPanel
-from rcp_task_acquisition.models.Warnings import Warning
-from rcp_task_acquisition.panels.MetadataPanel import MetadataPanel
-from rcp_task_acquisition.utils.constants import RAW_DATA_DIR, PLOT_LENGTH, VideoStatus
-from rcp_task_acquisition.panels.ControlsPanel import ControlsPanel
-from rcp_task_acquisition.panels.ImagePanel import ImagePanel
-from rcp_task_acquisition.models.SerialDevice import SerialDevice
+import wx
+import wx.lib.dialogs
+
 from rcp_task_acquisition.models.CameraFrontend import Camera
+from rcp_task_acquisition.models.Crop import Crop
+from rcp_task_acquisition.models.LabjackFrontend import LabjackFrontend
+from rcp_task_acquisition.models.SerialDevice import SerialDevice
+from rcp_task_acquisition.models.StimulusThread import StimulusThread
+from rcp_task_acquisition.models.Warnings import Warning
+from rcp_task_acquisition.panels.ControlsPanel import ControlsPanel
+from rcp_task_acquisition.panels.GraphPanel import GraphPanel
+from rcp_task_acquisition.panels.ImagePanel import ImagePanel
+from rcp_task_acquisition.panels.MetadataPanel import MetadataPanel
+from rcp_task_acquisition.utils import file_utils
+from rcp_task_acquisition.utils.constants import PLOT_LENGTH, RAW_DATA_DIR, VideoStatus
 from rcp_task_acquisition.utils.deidentify_dates import DateDeidentification
-from rcp_task_acquisition.utils.task_acquisistion_version import __version__
+from rcp_task_acquisition.utils.file_utils import read_config
 from rcp_task_acquisition.utils.logger import get_logger
+from rcp_task_acquisition.utils.task_acquisistion_version import __version__
 
 logger = get_logger("./panels/MainFrame")
 
@@ -893,7 +894,6 @@ class MainFrame(wx.Frame):
         # Any other case
         else:
             event.Skip()
-        return
 
     def show(self, launch_args, event):
         self.labjack_scan_rate = None

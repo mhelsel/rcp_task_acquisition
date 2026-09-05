@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 import csv
-from psychopy import visual, core
 
+from psychopy import core, visual
+
+import rcp_task_acquisition.tasks.VerbGeneration.constants as c
 from rcp_task_acquisition.tasks import bases
 from rcp_task_acquisition.utils.logger import get_logger
-import rcp_task_acquisition.tasks.VerbGeneration.constants as c
 
 logger = get_logger("./tasks/VerbGeneration")
 

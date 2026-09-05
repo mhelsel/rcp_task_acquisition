@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
-import wx
 import json
+
+import wx
 
 from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.tasks.VerbalFluency.constants import (
     PHONEMIC_LIST,
-    SEMANTIC_LIST,
     PHONEMIC_PHRASE,
+    SEMANTIC_LIST,
     SEMANTIC_PHRASE,
     TRIAL_TIME,
 )

@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 import glob
 import os
-from pathlib import PurePath, Path
 import shutil
 from datetime import datetime
+from pathlib import Path, PurePath
+
 import pywintypes
-import win32file
 import win32con
+import win32file
 
 from rcp_task_acquisition.utils.logger import get_logger
 

@@ -63,7 +63,7 @@ def on_press(key):
 
 
 def on_release(key):
-    print("{0} release".format(key))
+    print(f"{key} release")
     if key == Key.esc:
         # Stop listener
         return False

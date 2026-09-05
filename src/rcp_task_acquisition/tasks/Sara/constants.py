@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # SARA constants
 # in assesments lists, first list is the scoring criteria, while the second is whether or not to include hand choice
 ASSESMENTS = {

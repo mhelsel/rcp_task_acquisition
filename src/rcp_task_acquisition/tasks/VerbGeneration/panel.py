@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-import wx
 import csv
 
-from rcp_task_acquisition.panels.TrialPanel import TrialPanel
+import wx
+
 import rcp_task_acquisition.tasks.VerbGeneration.constants as c
+from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./VerbGeneration/panel")

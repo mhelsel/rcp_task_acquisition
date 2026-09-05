@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-import sqlite3
 import os
+import sqlite3
 from pathlib import Path
 
 from rcp_task_acquisition.utils.logger import get_logger

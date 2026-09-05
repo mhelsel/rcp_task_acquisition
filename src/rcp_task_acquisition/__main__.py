@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-import wx
-
 # set up matplotlib to be compatible on commandline/spyder
 import matplotlib
+import wx
 
 matplotlib.use("qtagg")
 

@@ -1,16 +1,18 @@
-# -*- coding: utf-8 -*-
+import linecache
+import sys
 import time
 from math import floor
 from multiprocessing import Process
+from queue import Empty
+
+import cv2
 import numpy as np
 import PySpin
-import sys, linecache
-import cv2
-import rcp_task_acquisition.utils.file_utils as file_utils
+
 from rcp_task_acquisition.models.AsyncVideoWriter import AsyncFFmpegGPUWriter  # AsyncVideoWriter
+from rcp_task_acquisition.utils import file_utils
 from rcp_task_acquisition.utils.camera_utils import identify_dropped_frames
 from rcp_task_acquisition.utils.logger import get_logger
-from queue import Empty
 
 logger = get_logger("./models/CameraProcess")
 
@@ -102,7 +104,7 @@ class multiCam_DLC_Cam(Process):
                         self.create_primary(cam)
                         self.camq_p2read.put("done")
                         while cam.TLStream.StreamOutputBufferCount() > 0:
-                            _image = cam.GetNextImage(int(100))
+                            _image = cam.GetNextImage(100)
                             _image.Release()
 
                     if msg == "InitS":
@@ -110,7 +112,7 @@ class multiCam_DLC_Cam(Process):
                         self.create_secondary(cam, is_decreased)
                         self.camq_p2read.put("done")
                         while cam.TLStream.StreamOutputBufferCount() > 0:
-                            _image = cam.GetNextImage(int(100))
+                            _image = cam.GetNextImage(100)
                             _image.Release()
 
                     if msg == "InitC":
@@ -125,7 +127,7 @@ class multiCam_DLC_Cam(Process):
                         cam.TriggerMode.SetValue(PySpin.TriggerMode_On)
                         isunconnected = True
                         while cam.TLStream.StreamOutputBufferCount() > 0:
-                            _image = cam.GetNextImage(int(100))
+                            _image = cam.GetNextImage(100)
                             _image.Release()
 
                         self.camq_p2read.put("done")
@@ -147,7 +149,7 @@ class multiCam_DLC_Cam(Process):
                         if not PySpin.IsAvailable(handling_mode) or not PySpin.IsWritable(
                             handling_mode
                         ):
-                            logger.warn(
+                            logger.warning(
                                 "Unable to set Buffer Handling mode (node retrieval). Aborting...\n"
                             )
                             return
@@ -308,7 +310,7 @@ class multiCam_DLC_Cam(Process):
                         if not PySpin.IsAvailable(node_acquisition_mode) or not PySpin.IsWritable(
                             node_acquisition_mode
                         ):
-                            logger.warn(
+                            logger.warning(
                                 "Unable to set acquisition mode to continuous (enum retrieval). Aborting..."
                             )
                             return False
@@ -319,7 +321,7 @@ class multiCam_DLC_Cam(Process):
                         if not PySpin.IsAvailable(
                             node_acquisition_mode_continuous
                         ) or not PySpin.IsReadable(node_acquisition_mode_continuous):
-                            logger.warn(
+                            logger.warning(
                                 "Unable to set acquisition mode to continuous (entry retrieval). Aborting..."
                             )
                             return False
@@ -355,34 +357,34 @@ class multiCam_DLC_Cam(Process):
                                 logger.debug("Pixel format BayerRG8 not available...")
 
                         else:
-                            logger.warn("Pixel format not available...")
+                            logger.warning("Pixel format not available...")
 
                         # Apply minimum to offset X
                         node_offset_x = PySpin.CIntegerPtr(nodemap.GetNode("OffsetX"))
                         if PySpin.IsAvailable(node_offset_x) and PySpin.IsWritable(node_offset_x):
                             node_offset_x.SetValue(node_offset_x.GetMin())
                         else:
-                            logger.warn("Offset X not available...")
+                            logger.warning("Offset X not available...")
                         # Apply minimum to offset Y
                         node_offset_y = PySpin.CIntegerPtr(nodemap.GetNode("OffsetY"))
                         if PySpin.IsAvailable(node_offset_y) and PySpin.IsWritable(node_offset_y):
                             node_offset_y.SetValue(node_offset_y.GetMin())
                         else:
-                            logger.warn("Offset Y not available...")
+                            logger.warning("Offset Y not available...")
                         # Set maximum width
                         node_width = PySpin.CIntegerPtr(nodemap.GetNode("Width"))
                         if PySpin.IsAvailable(node_width) and PySpin.IsWritable(node_width):
                             width_to_set = node_width.GetMax()
                             node_width.SetValue(width_to_set)
                         else:
-                            logger.warn("Width not available...")
+                            logger.warning("Width not available...")
                         # Set maximum height
                         node_height = PySpin.CIntegerPtr(nodemap.GetNode("Height"))
                         if PySpin.IsAvailable(node_height) and PySpin.IsWritable(node_height):
                             height_to_set = node_height.GetMax()
                             node_height.SetValue(height_to_set)
                         else:
-                            logger.warn("Height not available...")
+                            logger.warning("Height not available...")
                         cam.GainAuto.SetValue(PySpin.GainAuto_Off)
                         cam.BalanceWhiteAuto.SetValue(PySpin.BalanceWhiteAuto_Off)
 
@@ -393,7 +395,7 @@ class multiCam_DLC_Cam(Process):
                         ):
                             isp_enable_node.SetValue(False)
                         else:
-                            logger.warn("ISP Enable node is not available or read-only.")
+                            logger.warning("ISP Enable node is not available or read-only.")
 
                         # cam.AdcBitDepth.SetValue(PySpin.AdcBitDepth_Bit8)
                         user_cfg = file_utils.read_config("userdata.yaml")["cameras"]
@@ -416,7 +418,7 @@ class multiCam_DLC_Cam(Process):
                             if PySpin.IsAvailable(node_width) and PySpin.IsWritable(node_width):
                                 node_width.SetValue(int(width_to_set))
                             else:
-                                logger.warn("Width not available...")
+                                logger.warning("Width not available...")
                             # Set height
                             node_height = PySpin.CIntegerPtr(nodemap.GetNode("Height"))
                             height_max = node_height.GetMax()
@@ -426,7 +428,7 @@ class multiCam_DLC_Cam(Process):
                             if PySpin.IsAvailable(node_height) and PySpin.IsWritable(node_height):
                                 node_height.SetValue(int(height_to_set))
                             else:
-                                logger.warn("Height not available...")
+                                logger.warning("Height not available...")
                             logger.debug(f"node height: {height_max}")
                             # Apply offset X
                             node_offset_x = PySpin.CIntegerPtr(nodemap.GetNode("OffsetX"))
@@ -438,7 +440,7 @@ class multiCam_DLC_Cam(Process):
                             ):
                                 node_offset_x.SetValue(int(offset_x))
                             else:
-                                logger.warn("Offset X not available...")
+                                logger.warning("Offset X not available...")
                             # Apply offset Y
                             node_offset_y = PySpin.CIntegerPtr(nodemap.GetNode("OffsetY"))
                             offset_y = (
@@ -449,7 +451,7 @@ class multiCam_DLC_Cam(Process):
                             ):
                                 node_offset_y.SetValue(int(offset_y))
                             else:
-                                logger.warn("Offset Y not available...")
+                                logger.warning("Offset Y not available...")
 
                             aqW = int(user_cfg[camStr]["crop"][1] * self.dwnsmplfac)
                             aqH = int(user_cfg[camStr]["crop"][3] * self.dwnsmplfac)
@@ -457,7 +459,7 @@ class multiCam_DLC_Cam(Process):
                         else:
                             aqW = int(self.frmdim[3] * self.dwnsmplfac)
                             aqH = int(self.frmdim[1] * self.dwnsmplfac)
-                            record_frame_rate = int(10)
+                            record_frame_rate = 10
 
                         frame_results = np.zeros([aqH, aqW, 3], "ubyte")
                         frameSml = np.zeros(
@@ -484,20 +486,19 @@ class multiCam_DLC_Cam(Process):
 
                         cam.AcquisitionFrameRateEnable.SetValue(False)
                         if cam.ExposureAuto.GetAccessMode() != PySpin.RW:
-                            logger.warn("Unable to disable automatic exposure. Aborting...")
+                            logger.warning("Unable to disable automatic exposure. Aborting...")
                             continue
                         # cam.ExposureAuto.SetValue(PySpin.ExposureAuto_Continuous)
                         cam.ExposureAuto.SetValue(PySpin.ExposureAuto_Off)
                         if cam.ExposureTime.GetAccessMode() != PySpin.RW:
-                            logger.warn("Unable to set exposure time. Aborting...")
+                            logger.warning("Unable to set exposure time. Aborting...")
                             continue
                         # # Ensure desired exposure time does not exceed the maximum
                         max_exposure = cam.ExposureTime.GetMax()
                         logger.debug(f"{camStr} max exposure: {max_exposure}")
                         exposure_time_request = max_exposure  # int(user_cfg[camStr]['exposure'])
                         exposure_time_to_set = floor(1 / record_frame_rate * 1000 * 1000)
-                        if exposure_time_request <= exposure_time_to_set:
-                            exposure_time_to_set = exposure_time_request
+                        exposure_time_to_set = min(exposure_time_request, exposure_time_to_set)
                         # max_exposure = cam.ExposureTime.GetMax()
                         max_exposure = min(max_exposure, exposure_time_to_set) * 0.75
                         cam.ExposureTime.SetValue(current_exposure_time)
@@ -555,9 +556,7 @@ class multiCam_DLC_Cam(Process):
                     linecache.checkcache(filename)
                     line = linecache.getline(filename, lineno, f.f_globals)
                     logger.exception(
-                        'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(
-                            filename, lineno, line.strip(), exc_obj
-                        )
+                        f'EXCEPTION IN ({filename}, LINE {lineno} "{line.strip()}"): {exc_obj}'
                     )
                     logger.exception(self.camID + " : " + camStr)
                     if msg == "updateSettings":

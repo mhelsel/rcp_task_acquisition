@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import wx
 
 from rcp_task_acquisition.panels.TrialPanel import TrialPanel
@@ -128,7 +127,7 @@ class ReachGraspPanel(TrialPanel):
         self.object_text.Enable(True)
         self.large_object_radio.Enable(True)
         self.precision_object_radio.Enable(True)
-        self.seconds_text.SetLabel(f"Time: 0 secs")
+        self.seconds_text.SetLabel("Time: 0 secs")
         self.continue_button.SetValue(False)
         self.continue_button.SetLabel("Begin Trial")
         self.trial_text.SetLabel(f"Trial # {number + 1}")

@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-import os
 import datetime
 import logging
+import os
 from pathlib import Path
 
 from rcp_task_acquisition.utils.constants import RAW_DATA_DIR

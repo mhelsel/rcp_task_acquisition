@@ -1,11 +1,12 @@
-import ruamel.yaml
-import shutil
 import os
+import shutil
+
+import ruamel.yaml
 
 from rcp_task_acquisition.utils.constants import (
-    STIM_CONFIG_FILE_PATH,
-    SCREEN_CONFIG_FILE_NAME,
     CONFIG_FILE_PATH,
+    SCREEN_CONFIG_FILE_NAME,
+    STIM_CONFIG_FILE_PATH,
 )
 from rcp_task_acquisition.utils.logger import get_logger
 

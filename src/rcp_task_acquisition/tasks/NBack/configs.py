@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
 from __future__ import annotations
-from pathlib import Path
 
 from rcp_task_acquisition.utils.enums import Answer, Status
-
 
 # ---------- Default settings ----------
 # MODE = "test"

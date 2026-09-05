@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # ddk constants
 DDK_TRIAL_TIME = 10
 DDK_TRIALS_PER_SYLLABLE = 3

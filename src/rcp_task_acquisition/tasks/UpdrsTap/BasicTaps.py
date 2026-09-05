@@ -1,7 +1,7 @@
 from psychopy import core
 
 from rcp_task_acquisition.tasks import bases
-from rcp_task_acquisition.tasks.UpdrsTap.constants import BASIC_TAPS_TIME, BASIC_TAPS_PATH
+from rcp_task_acquisition.tasks.UpdrsTap.constants import BASIC_TAPS_PATH, BASIC_TAPS_TIME
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./tasks/UpdrsTap")

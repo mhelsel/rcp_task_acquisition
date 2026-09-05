@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-import wx
 import numpy as np
-from matplotlib.figure import Figure
+import wx
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 
-from rcp_task_acquisition.utils.constants import PLOT_CONSTANTS, LINE_STYLES, COLORS, DEFAULTS
+from rcp_task_acquisition.utils.constants import COLORS, DEFAULTS, LINE_STYLES, PLOT_CONSTANTS
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./models/GraphPanel")

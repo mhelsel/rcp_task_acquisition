@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 import numpy as np
-import matplotlib.patches as patches
+from matplotlib import patches
 
 from rcp_task_acquisition.utils.logger import get_logger
 
@@ -77,8 +76,7 @@ class Crop:
             roi_x = x_center
         elif roi_x + x_center > self.frmDims[3]:
             roi_x = self.frmDims[3] - x_center
-        if roi_y < y_center:
-            roi_y = y_center
+        roi_y = max(roi_y, y_center)
         if roi_y + y_center > self.frmDims[1]:
             roi_y = self.frmDims[1] - y_center
         self.croproi[ndx] = np.asarray(

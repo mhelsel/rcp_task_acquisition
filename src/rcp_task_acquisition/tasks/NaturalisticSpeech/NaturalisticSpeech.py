@@ -1,9 +1,10 @@
 import os
-from psychopy import visual, core
-from PIL import Image
 
-from rcp_task_acquisition.tasks.NaturalisticSpeech.constants import IMG_DIR
+from PIL import Image
+from psychopy import core, visual
+
 from rcp_task_acquisition.tasks import bases
+from rcp_task_acquisition.tasks.NaturalisticSpeech.constants import IMG_DIR
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./tasks/NaturalisticSpeech")
@@ -25,7 +26,7 @@ class NaturalisticSpeech(bases.StimulusBase):
         # Load and draw the photo being presented
         self.timer.value = 0
         if not self.photo:
-            logger.warn("No Photo is selected")
+            logger.warning("No Photo is selected")
             return
 
         self.trial += 1

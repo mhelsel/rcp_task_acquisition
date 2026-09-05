@@ -1,15 +1,17 @@
 import os
 import pathlib as pl
+
 import numpy as np
 import pandas as pd
-from psychopy import visual, core
-from psychopy.visual.vlcmoviestim import VlcMovieStim
 import pyaudio
+from psychopy import core, visual
+from psychopy.visual.vlcmoviestim import VlcMovieStim
+
 from rcp_task_acquisition.utils.constants import (
-    VIDEO_DIR,
     DURATION,
     FREQUENCY,
     SAMPLING_RATE,
+    VIDEO_DIR,
     VideoStatus,
 )
 from rcp_task_acquisition.utils.logger import get_logger
@@ -53,8 +55,6 @@ class StimulusBase:
         self.display.draw_patch()
         self.play_tone()
 
-        pass
-
     def prepareMetadataStream(self, sessionFolder, filename, header):
         """ """
         headerBreakLine = "-" * 40 + "\n"
@@ -62,15 +62,12 @@ class StimulusBase:
         if self.metadata is None:
             return
 
-        #
         sessionFolderPath = pl.Path(sessionFolder)
         if sessionFolderPath.exists() == False:
             sessionFolderPath.mkdir()
 
-        #
         fullFilePath = sessionFolderPath.joinpath(f"{filename}.txt")
 
-        #
         data = None
         if fullFilePath.exists():
             with open(fullFilePath, "r") as stream:
@@ -83,16 +80,12 @@ class StimulusBase:
                         break
                 data = lines[lineIndex + 1 :]
 
-        #
         stream = open(fullFilePath, "w")
-        for key, value in header.items():
-            stream.write(f"{key}: {value}\n")
+        stream.writelines(f"{key}: {value}\n" for key, value in header.items())
         stream.write(headerBreakLine)
 
-        #
         if data is not None:
-            for datum in data:
-                stream.write(datum)
+            stream.writelines(data)
 
         return stream
 

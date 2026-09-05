@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 import cv2
-import os
 
 
 def desmurf(video_path, old_file, new_file):
@@ -20,7 +18,7 @@ def desmurf(video_path, old_file, new_file):
     # Check if the video file was opened successfully
     if not cap.isOpened():
         print(f"Error: Could not open video file {old_file}")
-        return None
+        return
 
     while cap.isOpened():
         # print("new frame")

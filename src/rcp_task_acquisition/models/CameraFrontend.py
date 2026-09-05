@@ -1,18 +1,18 @@
-# -*- coding: utf-8 -*-
-import os
-import time
-import numpy as np
-import shutil
-import cv2
 import ctypes
-from multiprocessing import Queue, Value, Array
+import os
+import shutil
+import time
 from dataclasses import dataclass
+from multiprocessing import Array, Queue, Value
 
-from rcp_task_acquisition.utils.constants import DOWNSAMPLE_VAL, CAM_MAX_WIDTH, CAM_MAX_HEIGHT
+import cv2
+import numpy as np
+
 import rcp_task_acquisition.models.CameraProcess as spin
-import rcp_task_acquisition.utils.file_utils as file_utils
 from rcp_task_acquisition.models.Crop import Crop
 from rcp_task_acquisition.models.Warnings import Warning
+from rcp_task_acquisition.utils import file_utils
+from rcp_task_acquisition.utils.constants import CAM_MAX_HEIGHT, CAM_MAX_WIDTH, DOWNSAMPLE_VAL
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./models/CameraFrontend")
@@ -388,7 +388,7 @@ class Camera:
                 if int(update) > threshold:
                     error_message.append(f"{update}% of camera frames dropped for {cam}")
                 self.cam_dict[cam].camq_p2read.get()
-        logger.warn(error_message)
+        logger.warning(error_message)
         error = ""
         if video_errors:
             error = "\n" + "\n".join(video_errors)

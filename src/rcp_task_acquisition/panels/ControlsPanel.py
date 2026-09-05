@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
 import wx
 
-from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.panels.ParticipantMonitorPanel import MonitorPanel
-from rcp_task_acquisition.tasks.UpdrsTap.panel import FingerTapPanel
-from rcp_task_acquisition.tasks.NaturalisticSpeech.panel import NaturalisticSpeechPanel
+from rcp_task_acquisition.panels.TrialPanel import TrialPanel
+from rcp_task_acquisition.tasks.Calibration.panel import Calibration
 from rcp_task_acquisition.tasks.Diadochokinesis.panel import DdkPanel
-from rcp_task_acquisition.tasks.VowelSpace.panel import VowelSpacePanel
-from rcp_task_acquisition.tasks.VerbalFluency.panel import VerbalFluencyPanel
+from rcp_task_acquisition.tasks.NaturalisticSpeech.panel import NaturalisticSpeechPanel
 from rcp_task_acquisition.tasks.NBack.panel import NbackPanel
 from rcp_task_acquisition.tasks.ReachGrasp.panel import ReachGraspPanel
-from rcp_task_acquisition.tasks.ToneTaps.panel import ToneTapsClosedPanel
 from rcp_task_acquisition.tasks.Sara.panel import SaraPanel
+from rcp_task_acquisition.tasks.ToneTaps.panel import ToneTapsClosedPanel
+from rcp_task_acquisition.tasks.UpdrsTap.panel import FingerTapPanel
+from rcp_task_acquisition.tasks.VerbalFluency.panel import VerbalFluencyPanel
 from rcp_task_acquisition.tasks.VerbGeneration.panel import VerbGenerationPanel
-from rcp_task_acquisition.tasks.Calibration.panel import Calibration
+from rcp_task_acquisition.tasks.VowelSpace.panel import VowelSpacePanel
 
 
 class ControlsPanel(wx.Panel):

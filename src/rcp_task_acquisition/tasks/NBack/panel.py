@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
-import wx
 from datetime import datetime
+
+import wx
 
 from rcp_task_acquisition.panels.TrialPanel import TrialPanel
 from rcp_task_acquisition.tasks.NBack.configs import NBACK_TYPES

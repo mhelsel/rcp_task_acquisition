@@ -1,17 +1,17 @@
-# -*- coding: utf-8 -*-
 from __future__ import annotations
-import os
-import time
-from psychopy import core, visual, event
-import pandas as pd
-import random
-from pathlib import Path
-from typing import List, Tuple
 
-from rcp_task_acquisition.tasks import bases
+import os
+import random
+import time
+from pathlib import Path
+
+import pandas as pd
+from psychopy import core, event, visual
+
 import rcp_task_acquisition.tasks.NBack.configs as cfg
-from rcp_task_acquisition.utils.enums import Answer
+from rcp_task_acquisition.tasks import bases
 from rcp_task_acquisition.utils.constants import CODE_DIR
+from rcp_task_acquisition.utils.enums import Answer
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./tasks/NBack")
@@ -89,7 +89,7 @@ def _all_stimuli_paths() -> list[Path]:
 
 def _create_deterministic_sequence(
     n_back_level: int, total_trials: int
-) -> Tuple[List[Path], List[Answer]]:
+) -> tuple[list[Path], list[Answer]]:
     """
     Generate deterministic stimulus sequence with exact target count and repetition constraints.
 
@@ -158,7 +158,7 @@ def _create_deterministic_sequence(
 
 def _create_practice_sequence(
     n_back_level: int, total_trials: int
-) -> Tuple[List[Path], List[Answer]]:
+) -> tuple[list[Path], list[Answer]]:
     """
     Generate deterministic stimulus sequence for practice blocks with 3 targets.
 
@@ -227,7 +227,7 @@ def _create_practice_sequence(
         return stimulus_paths, answers
 
 
-def pull_stimuli_1back(trial_num: int) -> Tuple[List[Path], List[Answer]]:
+def pull_stimuli_1back(trial_num: int) -> tuple[list[Path], list[Answer]]:
     """
     Generate deterministic stimulus sequence for 1-back tasks.
 
@@ -257,7 +257,7 @@ def pull_stimuli_1back(trial_num: int) -> Tuple[List[Path], List[Answer]]:
     return _create_deterministic_sequence(1, trial_num)
 
 
-def pull_stimuli_2back(trial_num: int) -> Tuple[List[Path], List[Answer]]:
+def pull_stimuli_2back(trial_num: int) -> tuple[list[Path], list[Answer]]:
     """
     Generate deterministic stimulus sequence for 2-back tasks.
 
@@ -415,7 +415,7 @@ class N_back(bases.StimulusBase):
         # show intro based on data:
         if self.is_real:
             text = self.real_instructions()
-            for i in range(0, 3):
+            for i in range(3):
                 trials, answers = (
                     pull_stimuli_1back(21) if self.type == 1 else pull_stimuli_2back(22)
                 )
@@ -423,7 +423,7 @@ class N_back(bases.StimulusBase):
                 answer_list.append(answers)
         else:
             text = self.practice_instructions()
-            for i in range(0, 2):
+            for i in range(2):
                 trials, answers = (
                     pull_stimuli_1back(10) if self.type == 1 else pull_stimuli_2back(10)
                 )

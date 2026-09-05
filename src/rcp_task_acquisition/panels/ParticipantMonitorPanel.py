@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-import wx
-import wx.lib.dialogs
 import mss
 import numpy as np
+import wx
+import wx.lib.dialogs
 
 from rcp_task_acquisition.utils.logger import get_logger
 

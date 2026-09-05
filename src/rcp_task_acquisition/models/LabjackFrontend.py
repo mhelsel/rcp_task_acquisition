@@ -3,14 +3,15 @@ A class to store the labjack events and functions that are controlled from the
 frontend.
 """
 
-import wx
-import time
-import numpy as np
 import ctypes
-from multiprocessing import Queue, Array, Value
+import time
+from multiprocessing import Array, Queue, Value
 
-from rcp_task_acquisition.utils.constants import PLOT_CONSTANTS
+import numpy as np
+import wx
+
 from rcp_task_acquisition.models.LabjackProcess import LabJackDataStream
+from rcp_task_acquisition.utils.constants import PLOT_CONSTANTS
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./models/LabjackFrontend")
@@ -206,7 +207,7 @@ class LabjackFrontend:
                     time.sleep(2)
                     self.ser_success = False
                     self.serial_bool = False
-                    self.ser.write("A".encode())
+                    self.ser.write(b"A")
 
             if not self.hardware_test.value:
                 for index, lj_input in enumerate(self.hardware_indices):

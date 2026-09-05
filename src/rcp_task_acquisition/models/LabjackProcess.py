@@ -1,9 +1,12 @@
-from multiprocessing import Process
-import numpy as np
 import ctypes
-import win32api, win32process, win32con
+from multiprocessing import Process
 
+import numpy as np
+import win32api
+import win32con
+import win32process
 from labjack import ljm
+
 from rcp_task_acquisition.utils.constants import SCANS_PER_READ
 from rcp_task_acquisition.utils.logger import get_logger
 
@@ -136,13 +139,13 @@ class LabJackDataStream(Process):
                 self.create_csv.value = False
             data = ljm.eStreamRead(self.handle)
             self.results[:] = np.asarray(data[0])
-            if int(-9999) in self.results:
-                logger.warn("ERROR!! OVERFLOW!!")
+            if -9999 in self.results:
+                logger.warning("ERROR!! OVERFLOW!!")
                 # return
-                logger.warn(f"prev data[1]: {data_1}")
-                logger.warn(f"prev data[2]: {data_2}")
-                logger.warn(f"data[1]: {data[1]}")
-                logger.warn(f"data[2]: {data[2]}")
+                logger.warning(f"prev data[1]: {data_1}")
+                logger.warning(f"prev data[2]: {data_2}")
+                logger.warning(f"data[1]: {data[1]}")
+                logger.warning(f"data[2]: {data[2]}")
             data_1 = data[1]
             data_2 = data[2]
             if int(data[1]) > 48:

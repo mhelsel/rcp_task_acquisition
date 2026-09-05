@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import wx
 
 from rcp_task_acquisition.utils.logger import get_logger

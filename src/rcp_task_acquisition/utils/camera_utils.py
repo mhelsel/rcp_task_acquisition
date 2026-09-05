@@ -1,5 +1,6 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+
 from rcp_task_acquisition.utils.logger import get_logger
 
 logger = get_logger("./utils/camera_utils")
