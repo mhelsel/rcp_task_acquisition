@@ -42,7 +42,7 @@ while curr_idx < N - 1:
         ok = True
         for n in range(10):  # start, 8 data, stop
             center_f = curr_idx + (n + 0.5) * samples_per_bit
-            center = int(round(center_f))
+            center = round(center_f)
 
             # Majority vote in a small window around center
             lo = max(0, center - window_radius)
@@ -68,7 +68,7 @@ while curr_idx < N - 1:
 
         # Skip slightly less than one full frame
         # to ensure we catch the start of the next one
-        curr_idx += int(round(9.5 * samples_per_bit))
+        curr_idx += round(9.5 * samples_per_bit)
         continue
 
 # ---------------------------------------

@@ -132,7 +132,7 @@ class SaraPanel(TrialPanel):
     def check_can_edit(self, event):
         self.assesment_num = self.assesment_choice.GetSelection()
         self.current_assesment = self.assesment_list[self.assesment_num]
-        if self.assesment_list[self.assesment_num] in self.recent_trials.keys():
+        if self.assesment_list[self.assesment_num] in self.recent_trials:
             self.edit_button.Enable(True)
         else:
             self.edit_button.Enable(False)
@@ -162,7 +162,9 @@ class SaraPanel(TrialPanel):
 
 
 class AssesmentPanel(wx.Dialog):
-    def __init__(self, current_assesment, args={}, parent=None):
+    def __init__(self, current_assesment, args=None, parent=None):
+        if args is None:
+            args = {}
         super().__init__(parent, title="Score Assesment")
         self.vertical_sizer = wx.BoxSizer(wx.VERTICAL)
         self.border = 7
@@ -180,7 +182,9 @@ class AssesmentPanel(wx.Dialog):
         self.Layout()
         self.Show()
 
-    def _create_assesment_score(self, current_assesment, args={}):
+    def _create_assesment_score(self, current_assesment, args=None):
+        if args is None:
+            args = {}
         assesment_scores = ASSESMENTS[current_assesment]
         grid_sizer = wx.GridBagSizer(len(assesment_scores.keys()), 3)
         for assesment in assesment_scores:
@@ -210,11 +214,13 @@ class AssesmentPanel(wx.Dialog):
                 flag=wx.ALIGN_LEFT | wx.ALL,
                 border=self.border,
             )
-        if "score" in args.keys():
+        if "score" in args:
             self.button_list[args["score"]].SetValue(True)
         return grid_sizer
 
-    def _add_notes(self, args={}):
+    def _add_notes(self, args=None):
+        if args is None:
+            args = {}
         grid_sizer = wx.GridBagSizer(2, 4)
         notes_text = wx.StaticText(self, label="Notes:")
         self.notes = wx.TextCtrl(self, size=wx.Size(550, 100), style=wx.TE_MULTILINE | wx.TE_LEFT)
@@ -224,7 +230,7 @@ class AssesmentPanel(wx.Dialog):
         grid_sizer.Add(
             self.notes, pos=(1, 0), span=(0, 4), flag=wx.ALIGN_LEFT | wx.ALL, border=self.border
         )
-        if "notes" in args.keys():
+        if "notes" in args:
             self.notes.SetValue(args["notes"])
         return grid_sizer
 

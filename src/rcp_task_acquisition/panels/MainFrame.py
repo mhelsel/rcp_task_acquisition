@@ -82,7 +82,7 @@ class MainFrame(wx.Frame):
             index = 1
             psychopy_monitor = 0
         screenW = screenSizes[index][0]
-        screenH = screenSizes[index][1]
+        screenSizes[index][1]
         self.gui_size = (int(screenW * 0.9), int(screenW * 0.45))
         # self.gui_size = (screenW-90, screenH-55)
         super().__init__(
@@ -204,7 +204,7 @@ class MainFrame(wx.Frame):
         self.dtype = "uint8"
         self.size = self.frmDims[1] * self.frmDims[3] * 3
         self.shape = [self.frmDims[1], self.frmDims[3], 3]
-        self.array4feed = list()
+        self.array4feed = []
 
         self.canvas.mpl_connect("button_press_event", self.onClick)
         self.Bind(wx.EVT_CHAR_HOOK, self.OnKeyPressed)
@@ -630,7 +630,7 @@ class MainFrame(wx.Frame):
         except:
             pass
         if metadata.show() == wx.ID_OK:
-            self.meta, ruamelFile = file_utils.metadata_template()
+            self.meta, _ruamelFile = file_utils.metadata_template()
             date_string = datetime.datetime.utcnow().strftime("%Y%m%d")
             cameras = {}
             self.meta["version"] = str(__version__)
@@ -655,7 +655,7 @@ class MainFrame(wx.Frame):
             self.meta["Collection"] = "info"
             self.meta["hardware"] = self.user_cfg["hardware"]
             # self.meta['screen_settings'] = self.user_cfg['screen_settings']
-            meta_name = "%s_%s_%s_metadata.yaml" % (
+            meta_name = "{}_{}_{}_metadata.yaml".format(
                 date_string,
                 self.user_cfg["unitRef"],
                 self.sess_string,
@@ -804,7 +804,7 @@ class MainFrame(wx.Frame):
         return True
 
     def update_crop(self, event):
-        value = True if self.crop.GetValue() else False
+        value = bool(self.crop.GetValue())
         self.cams.update_crop(value)
 
     def recordCam(self, event):
@@ -911,7 +911,7 @@ class MainFrame(wx.Frame):
         self.task_metadata = launch_args
         self.cam_cfg = {}
         self.frames = None
-        if not self.task or self.task not in self.task_cfg.keys():
+        if not self.task or self.task not in self.task_cfg:
             args = self.user_cfg["hardware"]
             self.cam_cfg = self.user_cfg["cameras"]
             self.widget_panel.show_cams()
@@ -920,9 +920,9 @@ class MainFrame(wx.Frame):
             hardware_list = self.task_cfg[self.task]["settings"]
             self.widget_panel.hide_cams()
             for hardware in hardware_list:
-                if hardware in self.user_cfg["hardware"].keys():
+                if hardware in self.user_cfg["hardware"]:
                     args[hardware] = self.user_cfg["hardware"][hardware]
-                elif hardware in self.user_cfg["cameras"].keys():
+                elif hardware in self.user_cfg["cameras"]:
                     self.cam_cfg[hardware] = self.user_cfg["cameras"][hardware]
         logger.debug(f"args: {args}")
         hardware_tuple = [

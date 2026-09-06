@@ -66,9 +66,9 @@ class Camera:
         self.contrast_test = contrast_test
         self.focus_test = focus_test
         self.warning = Warning()
-        self.unconnected = list()
-        self.camStrList = list()
-        self.cam_settings = list()
+        self.unconnected = []
+        self.camStrList = []
+        self.cam_settings = []
         self.trial = 0
         self.session = 0
         self.participant_monitor = monitor
@@ -93,7 +93,7 @@ class Camera:
                     0,
                     int(CAM_MAX_WIDTH / DOWNSAMPLE_VAL / cam_bin),
                 ]
-                is_primary = True if self.cam_cfg[name]["ismaster"] or is_unconnected else False
+                is_primary = bool(self.cam_cfg[name]["ismaster"] or is_unconnected)
                 new_cam = CamSettings(
                     name=name,
                     serial=self.cam_cfg[name]["serial"],
@@ -317,9 +317,9 @@ class Camera:
         time.sleep(2)
 
     def initThreads(self):
-        self.camq = dict()
-        self.camq_p2read = dict()
-        self.cam = list()
+        self.camq = {}
+        self.camq_p2read = {}
+        self.cam = []
         for ndx, camID in enumerate(self.cam_dict):
             self.cam_dict[camID].camq = Queue()
             self.cam_dict[camID].camq_p2read = Queue()
@@ -402,9 +402,9 @@ class Camera:
 
     def updateSettings(self, event):
         self.user_cfg = file_utils.read_config("userdata.yaml")
-        self.aqW = list()
-        self.aqH = list()
-        self.recSet = list()
+        self.aqW = []
+        self.aqH = []
+        self.recSet = []
         for n, camID in enumerate(self.cam_dict):
             self.cam_dict[camID].camq.put("updateSettings")
             suc_test = self.cam_dict[camID].camq_p2read.get()
@@ -475,12 +475,12 @@ class Camera:
 
     def reset_variables(self):
         self.labjack_scan_rate = None
-        self.camStrList = list()
+        self.camStrList = []
         self.cam_settings = []
-        self.secondary_cams = list()
-        self.primary_cams = list()
+        self.secondary_cams = []
+        self.primary_cams = []
         self.cam_pointer = 0
-        self.im = list()
+        self.im = []
         self.exposure = []
         self.x1 = 0
         self.y1 = 0

@@ -109,7 +109,7 @@ try:
 
     # Configure and start stream
     scanRate = ljm.eStreamStart(handle, scansPerRead, numAddresses, aScanList, scanRate)
-    print("\nStream started with a scan rate of %0.0f Hz." % scanRate)
+    print(f"\nStream started with a scan rate of {scanRate:0.0f} Hz.")
 
     print("\nPerforming %i stream reads." % MAX_REQUESTS)
     start = datetime.now()
@@ -133,7 +133,7 @@ try:
         print("\neStreamRead %i" % i)
         ainStr = ""
         for j in range(numAddresses):
-            ainStr += "%s = %0.5f, " % (aScanListNames[j], aData[j])
+            ainStr += f"{aScanListNames[j]} = {aData[j]:0.5f}, "
         print("  1st scan out of %i: %s" % (scans, ainStr))
         print(
             "  Scans Skipped = %0.0f, Scan Backlogs: Device = %i, LJM = "
@@ -145,8 +145,8 @@ try:
 
     print("\nTotal scans = %i" % (totScans))
     tt = (end - start).seconds + float((end - start).microseconds) / 1000000
-    print("Time taken = %f seconds" % (tt))
-    print("LJM Scan Rate = %f scans/second" % (scanRate))
+    print(f"Time taken = {tt:f} seconds")
+    print(f"LJM Scan Rate = {scanRate:f} scans/second")
     print("Timed Scan Rate = %f scans/second" % (totScans / tt))
     print("Timed Sample Rate = %f samples/second" % (totScans * numAddresses / tt))
     print("Skipped scans = %0.0f" % (totSkip / numAddresses))

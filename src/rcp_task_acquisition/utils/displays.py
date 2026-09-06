@@ -173,7 +173,7 @@ class Window(Window):
     def getNumpyArray(self, buffer="back", thumbnailSize=None):
         shape = (thumbnailSize, thumbnailSize)
         image = self.getMovieFrame(buffer=buffer)
-        self.movieFrames = list()
+        self.movieFrames = []
         if thumbnailSize is not None:
             image.thumbnail(shape)
         array = np.array(image)
@@ -221,7 +221,7 @@ class Window(Window):
             self._patch.tex = _highStateTexture
         else:
             self._patch.tex = _lowStateTexture
-        self._state = True if value else False
+        self._state = bool(value)
 
     @property
     def patchCoords(self):

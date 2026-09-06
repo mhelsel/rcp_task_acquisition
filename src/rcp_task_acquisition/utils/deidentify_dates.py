@@ -103,7 +103,7 @@ class DateDeidentification:
         logger.debug(f"deid_data: {self.deid_data_dir}")
 
     def deidentify_all_data(self):
-        dirlist = list()
+        dirlist = []
 
         prev_date_list = [name for name in os.listdir(self.raw_data_dir)]
         for d in prev_date_list:

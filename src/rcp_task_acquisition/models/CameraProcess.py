@@ -49,8 +49,7 @@ class multiCam_DLC_Cam(Process):
         # exposure_max = 4000
         config = file_utils.read_config("userdata.yaml")
         user_cfg = config["cameras"]
-        test_num = 0
-        camStrList = list()
+        camStrList = []
 
         for s in user_cfg:
             if not user_cfg[s]["in_use"]:
@@ -212,7 +211,7 @@ class multiCam_DLC_Cam(Process):
                                 # frame_bgr = cv2.cvtColor(frame_results, cv2.COLOR_RGB2BGR).copy()
 
                                 # ok = self.async_writer.write(frame_results, frame_id, capture_duration)
-                                ok = self.async_writer.write(frame_bits, frame_id, capture_duration)
+                                self.async_writer.write(frame_bits, frame_id, capture_duration)
                                 # if not ok:
                                 #     logger.error(f"{self.camID}: async writer queue full; dropped frame {frame_id}")
 
@@ -549,7 +548,7 @@ class multiCam_DLC_Cam(Process):
                         logger.info(f"Frame rate {camStr}: {self.framerate}")
 
                 except PySpin.SpinnakerException:
-                    exc_type, exc_obj, tb = sys.exc_info()
+                    _exc_type, exc_obj, tb = sys.exc_info()
                     f = tb.tb_frame
                     lineno = tb.tb_lineno
                     filename = f.f_code.co_filename

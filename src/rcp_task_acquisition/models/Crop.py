@@ -8,8 +8,8 @@ logger = get_logger("./models/Crop")
 
 class Crop:
     def __init__(self):
-        self.croprec = list()
-        self.croproi = list()
+        self.croprec = []
+        self.croproi = []
         self.set_crop = None
 
     def set_key_crop(self, axes, keyCode):

@@ -57,7 +57,7 @@ class GraphPanel(wx.Panel):
         # creating own x axis with a line/text so there is more control
         setup_axes = self.figure.add_subplot(1, 1, 1)
         setup_axes.set_position((0.01, 0.25, 0.98, 0.7))
-        (plot,) = setup_axes.plot(
+        (_plot,) = setup_axes.plot(
             [0, 0, 40000, 40000, np.nan, 40000, 80000, 80000],
             [-2.25, -2, -2, -2.25, np.nan, -2, -2, -2.25],
             color=white_color,

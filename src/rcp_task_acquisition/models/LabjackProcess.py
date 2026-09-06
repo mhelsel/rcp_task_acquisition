@@ -103,9 +103,7 @@ class LabJackDataStream(Process):
         data_1 = None
         data_2 = None
         debounce = 0
-        min_off_samples = int(
-            round(self.attemptedscanRate * 0.01)
-        )  # minimum button release duration
+        min_off_samples = round(self.attemptedscanRate * 0.01)  # minimum button release duration
 
         aScanList = ljm.namesToAddresses(len(self.scan_list), self.scan_list)[0]
         if self.digital_inputs or self.extended_inputs:
@@ -162,11 +160,10 @@ class LabJackDataStream(Process):
                     reshape_list = new_list
 
                     self.button_pressed.value = not np.all(reshape_list[button[0]])
-                    if debounce == 0:
-                        if self.button_pressed.value:
-                            self.press_counter.value += 1
-                            logger.debug(f"press#: {self.press_counter.value}")
-                            debounce = 1
+                    if debounce == 0 and self.button_pressed.value:
+                        self.press_counter.value += 1
+                        logger.debug(f"press#: {self.press_counter.value}")
+                        debounce = 1
                     if np.all(reshape_list[button[0]][-min_off_samples:]):
                         debounce = 0
             if write_to_csv:

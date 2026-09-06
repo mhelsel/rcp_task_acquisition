@@ -316,7 +316,6 @@ class N_back(bases.StimulusBase):
         texts = []
 
         # Initialize the image stimuli
-        ims = []
         picture_list = []
         correct_img = visual.ImageStim(
             self.display,
@@ -374,7 +373,7 @@ class N_back(bases.StimulusBase):
         # stim.draw()
         # patch = draw_patch
         self.display.switch_patch()
-        thisFlipTime, flip_diff = win.flip()
+        thisFlipTime, _flip_diff = win.flip()
         timeData.loc[len(timeData)] = [name, triali, thisFlipTime]
         while gClock.getTime() - thisFlipTime < dur:
             stim.draw()
@@ -400,7 +399,7 @@ class N_back(bases.StimulusBase):
         logger.debug(self.type)
         logger.debug(self.is_real)
         # Initialize the display window
-        fixation, texts, correct_ims, incorrect_ims = self.setupWinStims(imdir)
+        fixation, _texts, correct_ims, incorrect_ims = self.setupWinStims(imdir)
         # Set up a dataframe to hold time data
         timeDataColumns = ["Event_Name", "Trial_Num", "Time_Since_Start"]
         timeData = pd.DataFrame(columns=timeDataColumns)
@@ -522,7 +521,7 @@ class N_back(bases.StimulusBase):
                     self.display, timeData, 0, fixation, PARAMS["ISITime"], "Initial_Fixation_Shown"
                 )
 
-        timeData, fixFlipTime = self.showAndLog(
+        timeData, _fixFlipTime = self.showAndLog(
             self.display, timeData, 0, end_text, 2, "Trial_Shown"
         )
         self.is_real = None
@@ -534,7 +533,7 @@ class N_back(bases.StimulusBase):
         return PARAMS
 
     def update_data(self, selections):
-        self.is_real = True if selections[0] == "real" else False
+        self.is_real = selections[0] == "real"
         self.type = 1 if selections[1] == "1-back" else 2
 
         # PARAMS["n_back_type"] = self.type

@@ -27,11 +27,14 @@ class ImagePanel(wx.Panel):
         row_pos = 0.005
         row_inc = 0.5
         self.figure.clf()
-        self.axes = list()
+        self.axes = []
         self.figure.patch.set_facecolor("none")
-        props = dict(
-            boxstyle="square", facecolor=(0.8, 0.8, 0.8), edgecolor=(0.1, 0.1, 0.1), alpha=0.75
-        )
+        props = {
+            "boxstyle": "square",
+            "facecolor": (0.8, 0.8, 0.8),
+            "edgecolor": (0.1, 0.1, 0.1),
+            "alpha": 0.75,
+        }
         for c in range(int(column_count)):
             self.axes.append(self.figure.add_subplot(1, column_count, c + 1, frameon=True))
 
@@ -66,9 +69,12 @@ class ImagePanel(wx.Panel):
     def update_names(self, cam_name_list):
         for index, axis in enumerate(self.axes):
             self.texts[index].remove()
-            props = dict(
-                boxstyle="square", facecolor=(0.1, 0.1, 0.1), edgecolor=(0.1, 0.1, 0.1), alpha=0.75
-            )
+            props = {
+                "boxstyle": "square",
+                "facecolor": (0.1, 0.1, 0.1),
+                "edgecolor": (0.1, 0.1, 0.1),
+                "alpha": 0.75,
+            }
             self.texts[index] = axis.text(
                 5,
                 5,

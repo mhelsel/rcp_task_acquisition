@@ -227,7 +227,7 @@ class HardwarePanel(wx.Panel):
             new_hardware = HardwareRow(
                 name, in_use, labjack, voltage_ranges
             )  # min_graph, max_graph, voltage_ranges)
-            if hardware in hardware_config.keys():
+            if hardware in hardware_config:
                 labjack.Enable(True)
                 name.Enable(True)
                 in_use.SetValue(True)
@@ -237,7 +237,7 @@ class HardwarePanel(wx.Panel):
                 voltage_ranges.Enable(True)
 
                 if (
-                    "voltage_range" in hardware_config[hardware].keys()
+                    "voltage_range" in hardware_config[hardware]
                     and "A" in hardware_config[hardware]["labjack_input"]
                 ):
                     volt_index = ANALOG_RANGES.index(hardware_config[hardware]["voltage_range"][1])
@@ -245,7 +245,7 @@ class HardwarePanel(wx.Panel):
 
             elif "user" in hardware.lower() and user_input_count < len(user_input_list):
                 voltage_ranges.Enable(True)
-                if "voltage_range" in hardware_config[hardware].keys():
+                if "voltage_range" in hardware_config[hardware]:
                     voltage_ranges.SetSelection(hardware_config[hardware]["voltage_range"])
 
                 labjack.Enable(True)
@@ -558,7 +558,7 @@ class HardwarePanel(wx.Panel):
                 if serial == -1:
                     Warning("serial").display()
                     return
-                if self._get_name(camera) in camera_dict.keys():
+                if self._get_name(camera) in camera_dict:
                     camera_dict[self._get_name(camera)]["ismaster"] = camera.is_primary.GetValue()
                     camera_dict[self._get_name(camera)]["serial"] = camera.serial.GetStrings()[
                         serial
